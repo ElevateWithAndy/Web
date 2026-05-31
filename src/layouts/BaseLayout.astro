@@ -56,6 +56,34 @@ if (!basePath.endsWith('/')) basePath += '/';
         padding: 1.25rem;
         box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
       }
+      .post-list {
+        display: grid;
+        gap: 1rem;
+        margin: 0;
+        padding: 0;
+      }
+      .post-card {
+        background: white;
+        border: 1px solid #d1d5db;
+        border-radius: 1rem;
+        padding: 1rem 1.25rem;
+        box-shadow: 0 1px 6px rgba(15, 23, 42, 0.06);
+      }
+      .post-card h3 {
+        margin: 0 0 0.5rem;
+      }
+      .post-card a {
+        color: #1d4ed8;
+        text-decoration: none;
+      }
+      .post-card a:hover {
+        text-decoration: underline;
+      }
+      .post-meta {
+        color: #6b7280;
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+      }
     </style>
   </head>
   <body>
