@@ -1,5 +1,16 @@
 ---
 const { title, description } = Astro.props;
+
+// Compute base path from `Astro.site` if provided so links include repository path.
+let basePath = '/';
+if (typeof Astro.site === 'string' && Astro.site.length > 0) {
+  try {
+    basePath = new URL(Astro.site).pathname || '/';
+  } catch (e) {
+    basePath = '/';
+  }
+}
+if (!basePath.endsWith('/')) basePath += '/';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -49,14 +60,14 @@ const { title, description } = Astro.props;
   </head>
   <body>
     <header>
-      <p><a href="/">← Home</a></p>
+      <p><a href={basePath}>← Home</a></p>
       <h1 class="page-title">Elevate with Andy</h1>
       <p>{description ?? 'Simple Astro site for GitHub Pages.'}</p>
       <nav>
-        <a href="/">Home</a>
-        <a href="/recommended/">Recommended</a>
-        <a href="/yt/">YouTube</a>
-        <a href="/blog/">Blog</a>
+        <a href={basePath}>Home</a>
+        <a href={`${basePath}recommended/`}>Recommended</a>
+        <a href={`${basePath}yt/`}>YouTube</a>
+        <a href={`${basePath}blog/`}>Blog</a>
       </nav>
     </header>
     <main>
