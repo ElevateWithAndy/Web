@@ -1,7 +1,8 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig } from 'astro:config';
+import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://elevatewithandy.github.io',
-  base: '/',
-  output: 'static',
+  site: 'https://elevatewithandy.com', // Your live custom domain
+  base: '/',                           // Kept at root because it's a custom domain
+  integrations: [tailwind()],
 });

@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const amazonTag = "YOUR_TAG-20"; // Replace with your real Amazon ID
+
+const gearCategories = [
+  {
+    category: "Pilates & Core",
+    items: [
+      { name: "Premium Pilates Mat", desc: "1/2-Inch extra thick high-density foam to protect your spine during rolling exercises.", asin: "B07H9YVJ71" },
+      { name: "Balanced Body Pilates Ring", desc: "14-inch flexible resistance ring with inner/outer padded grips for thigh tracking.", asin: "B00076MD8K" }
+    ]
+  },
+  {
+    category: "Functional Movement & Ballet",
+    items: [
+      { name: "High-Density Foam Roller", desc: "36-inch roller for myofascial release, thoracic spine mobility, and posture alignment.", asin: "B00X3MOWE0" },
+      { name: "Professional Ballet Turning Board", desc: "Sturdy composite board to improve your spot, core engagement, and pirouette balance.", asin: "B019G7CPRE" }
+    ]
+  }
+];
+---
+<BaseLayout title="Recommended Gear | Elevate With Andy">
+  <main class="max-w-4xl mx-auto px-6 py-16">
+    <div class="text-center max-w-xl mx-auto mb-16">
+      <h1 class="text-3xl font-light tracking-wide text-brand-dark uppercase">Recommended Gear</h1>
+      <p class="text-sm text-brand-grey mt-3 leading-relaxed">Tools and props curated to build resilience, alignment, and strength. Products featured here are used directly in my classes.</p>
+      <p class="text-[10px] text-neutral-400 italic mt-2">As an Amazon Associate, Elevate With Andy earns from qualifying purchases.</p>
+    </div>
+
+    <div class="space-y-16">
+      {gearCategories.map(cat => (
+        <div>
+          <h2 class="text-xs font-bold tracking-widest text-brand-grey uppercase border-b pb-2 mb-6">{cat.category}</h2>
+          <div class="grid md:grid-cols-2 gap-8">
+            {cat.items.map(item => (
+              <div class="flex flex-col justify-between p-6 bg-brand-light border border-neutral-100 rounded-lg hover:border-brand-grey/20 transition-all">
+                <div>
+                  <h3 class="font-medium text-base text-brand-dark">{item.name}</h3>
+                  <p class="text-sm text-brand-grey mt-2 leading-relaxed font-light">{item.desc}</p>
+                </div>
+                <div class="mt-6">
+                  <a 
+                    href={`https://amazon.com{item.asin}/?tag=${amazonTag}`}
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="inline-block w-full text-center text-xs font-semibold tracking-wider uppercase bg-brand-dark hover:bg-brand-grey text-white py-3 px-4 rounded transition-colors"
+                  >
+                    View on Amazon
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </main>
+</BaseLayout>
