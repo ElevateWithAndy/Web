@@ -9,11 +9,12 @@
       <span class="text-xs tracking-wider text-neutral-200 font-medium uppercase mt-0.5 block">Resilience in Motion</span>
     </a>
     <!-- Changed link navigation colors to pure white and subtle hover opacity shifts -->
-    <nav class="flex gap-8 text-sm tracking-wide uppercase font-medium text-white/90">
-      <a href="/videos" class="hover:text-white transition-colors">Videos</a>
-      <a href="/LivingNotebook" class="hover:text-white transition-colors">Living Notebook</a>
-      <a href="/gear" class="hover:text-white transition-colors">Recommended Gear</a>
-    </nav>
+    <nav class="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-center text-sm tracking-wide uppercase font-medium text-white/90">
+      <!-- Each link has 'w-full sm:w-auto' to stack cleanly on mobile but sit side-by-side on desktop -->
+      <a href="/videos" class="w-full sm:w-auto block sm:inline hover:text-white transition-colors order-2 sm:order-none">Videos</a>
+      <a href="/blog" class="w-full sm:w-auto block sm:inline hover:text-white transition-colors order-1 sm:order-none">Blog</a>
+      <a href="/gear" class="w-full sm:w-auto block sm:inline hover:text-white transition-colors order-3 sm:order-none">Recommended Gear</a>
+    </nav>    
   </div>
   <!-- Bottom Tier: Matches Page Canvas (#fcfbfc) with Centered Signature Grey Text -->
   <div class="bg-[#fcfbfc] border-b border-neutral-100 py-2.5">
