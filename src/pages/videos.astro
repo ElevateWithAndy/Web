@@ -3,66 +3,101 @@ import Parser from 'rss-parser';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const parser = new Parser();
-let dynamicVideos = [];
 
-try {
-  // Replace with your real YouTube Channel ID (Keep the UC prefix)
-  const channelId = "UCIz5Ip_0-j4m7T2PSA34G3A"; 
-  const feed = await parser.parseURL(`https://youtube.com{channelId}`);
-  
-  // Map out the fields from YouTube's automated syndication structure
-  dynamicVideos = feed.items.map(item => {
-    // Extract YouTube's unique video ID from the atom link structure
-    const videoId = item.link ? item.link.split('v=')[1] : '';
-    return {
-      title: item.title,
-      youtubeUrl: item.link,
-      // Grabs the high-res thumbnail directly using the extracted ID
-      thumbnail: `https://youtube.com{videoId}/maxresdefault.jpg`
-    };
-  }).slice(0, 6); // Change 6 to limit how many recent videos display
-} catch (error) {
-  console.error("Error fetching YouTube RSS stream:", error);
-}
+// 1. UPDATE THESE: Replace with your actual YouTube Playlist IDs (the text after list=)
+const playlists = [
+  {
+    name: "Pilates Cookies | Bite-Sized Resets",
+    id: "PL_REPLACE_WITH_YOUR_FUNCTIONAL_MOVEMENT_PLAYLIST_ID",
+    description: "Enjoy a Pilates Cookie—a bite-sized movement ritual to help you find feel-good ease and be where your feet are.  Through mindful movement, we change ourselves from the inside out. By using gravity as our free training tool—and occasionally bringing in small props for immediate feedback—we can quickly restore alignment, clear the mental clutter, and reset our entire state of being in just a few minutes. This is the power of continuously showing up, one bite-sized piece at a time.  This is why we elevate.  #PilatesCookies #BiteSizedRitual #BeWhereYourFeetAre #MindfulMovement #ElevateWithAndy"
+  },
+  {
+    name: "Shadows & Stars: The Wild Experiment",
+    id: "PL_REPLACE_WITH_YOUR_PILATES_PLAYLIST_ID",
+    description: "Welcome to a space where thriving is a wild experiment.  This playlist explores creative projects and everyday habits that go way beyond just "moving well"—taking practices out of the studio and releasing them into real life. It’s where artistic endeavors and everyday play collide.  From deep-diving into D&D characters and digging in the yard, to hanging with furred and feathered friends... it’s all part of the practice.  This is where we find our feet in the dark together, walking amongst the shadows to find our stars.  #WildExperiment #CreativeWellBeing #EmbodiedLiving #DNDCommunity #ElevateWithAndy"
+  }
+];
+
+// Fetch and unpack each playlist feed asynchronously
+const structuredCategories = await Promise.all(
+  playlists.map(async (pl) => {
+    try {
+      const feed = await parser.parseURL(`https://youtube.com{pl.id}`);
+      
+      const videos = feed.items.map(item => {
+        const videoId = item.link ? item.link.split('v=')[1]?.split('&')[0] : '';
+        return {
+          title: item.title || 'Movement Session',
+          youtubeUrl: item.link,
+          thumbnail: videoId 
+            ? `https://youtube.com{videoId}/maxresdefault.jpg` 
+            : 'https://youtube.com'
+        };
+      }).slice(0, 3); // Limits the page to the 3 most recent videos per playlist
+
+      return { name: pl.name, description: pl.description, videos };
+    } catch (e) {
+      console.error(`Error parsing playlist ${pl.name}:`, e);
+      return { name: pl.name, description: pl.description, videos: [] };
+    }
+  })
+);
 ---
 
-<BaseLayout title="Video Practice Index | Elevate With Andy">
+<BaseLayout title="Movement Index | Elevate With Andy">
   <main class="max-w-5xl mx-auto px-6 py-16">
-    <div class="text-center max-w-xl mx-auto mb-16">
+    
+    <!-- Video Page Title Block -->
+    <div class="text-center max-w-xl mx-auto mb-20">
       <h1 class="text-3xl font-light tracking-wide text-[#1e1b21] uppercase">On-Demand Practice</h1>
-      <p class="text-sm text-[#7a7480] mt-3 font-light">The latest sequences streamed directly from the channel.</p>
+      <p class="text-sm text-[#7a7480] mt-3 font-light leading-relaxed">
+        Sequences and training sets sorted by movement discipline.
+      </p>
     </div>
 
-    {dynamicVideos.length === 0 ? (
-      <p class="text-center text-sm text-[#7a7480] italic">Streaming sync momentarily unavailable.</p>
-    ) : (
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {dynamicVideos.map(video => (
-          <div class="group flex flex-col justify-between">
-            <div>
-              <div class="aspect-video w-full overflow-hidden bg-neutral-100 rounded-md mb-4 shadow-sm">
-                <img 
-                  src={video.thumbnail} 
-                  alt={video.title} 
-                  loading="lazy"
-                  class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-300"
-                />
-              </div>
-              <h3 class="font-normal text-base text-[#1e1b21] leading-snug line-clamp-2">{video.title}</h3>
+    <!-- Playlist Section Divider Blocks -->
+    <div class="space-y-20">
+      {structuredCategories.map(category => (
+        category.videos.length > 0 && (
+          <section>
+            <!-- Your signature gray (#7a7480) used as an elegant structural text rule -->
+            <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase border-b border-neutral-100 pb-2 mb-8">
+              {category.name}
+            </h2>
+            <p class="text-xs text-[#7a7480] font-light mt-1 max-w-2xl leading-relaxed">
+                {category.description}
+            </p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {category.videos.map(video => (
+                <div class="group flex flex-col justify-between bg-white border border-neutral-100 rounded-lg p-4 shadow-sm hover:border-[#7a7480]/20 transition-all">
+                  <div>
+                    <div class="aspect-video w-full overflow-hidden bg-neutral-50 rounded mb-4">
+                      <img 
+                        src={video.thumbnail} 
+                        alt={video.title} 
+                        loading="lazy"
+                        class="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 transition-all duration-300"
+                      />
+                    </div>
+                    <h3 class="font-normal text-base text-[#1e1b21] leading-snug line-clamp-2">{video.title}</h3>
+                  </div>
+                  <div class="mt-4 pt-3 border-t border-neutral-50">
+                    <a 
+                      href={video.youtubeUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="text-xs font-semibold tracking-wider uppercase text-red-600 hover:text-red-700 inline-flex items-center gap-1 transition-colors"
+                    >
+                      Stream Practice 
+                      <span class="text-sm font-normal">→</span>
+                    </a>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div class="mt-4">
-              <a 
-                href={video.youtubeUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="text-xs font-semibold tracking-wider uppercase text-red-600 hover:text-red-700 inline-flex items-center gap-1 transition-colors"
-              >
-                Watch on YouTube →
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
-    )}
+          </section>
+        )
+      ))}
+    </div>
   </main>
 </BaseLayout>
