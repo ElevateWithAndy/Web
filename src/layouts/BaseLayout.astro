@@ -1,17 +1,4 @@
 ---
-const { title, description } = Astro.props;
-
-// Compute base path from `Astro.site` if provided so links include repository path.
-let basePath = '/';
-if (typeof Astro.site === 'string' && Astro.site.length > 0) {
-  try {
-    basePath = new URL(Astro.site).pathname || '/';
-  } catch (e) {
-    basePath = '/';
-  }
-}
-if (!basePath.endsWith('/')) basePath += '/';
----
 import Header from '../components/Header.astro';
 const { title } = Astro.props;
 ---
