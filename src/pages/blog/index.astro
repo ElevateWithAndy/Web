@@ -2,8 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Fetch all files from src/content/blog/ and sort them newest first
-const posts = (await getCollection('blog')).sort(
+// Fetch the entries safely with fallback array tracking
+const rawPosts = await getCollection('blog') || [];
+const posts = rawPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
