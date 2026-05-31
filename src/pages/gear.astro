@@ -6,9 +6,9 @@ const amazonTag = "elevatewit027-20";
 
 const gearCategories = [
   {
-    category: "Pilates & Core",
+    category: "Small Functional Movement Props",
     items: [
-      { name: "Premium Pilates Mat", desc: "1/2-Inch extra thick high-density foam to protect your spine during rolling exercises.", asin: "B07H9YVJ71" },
+      { name: "Franklin Method Ball Set", desc: "Textured Franklin Method Balls for myofascial release", asin: "B002YQRF1A" },
       { name: "Balanced Body Pilates Ring", desc: "14-inch flexible resistance ring with inner/outer padded grips for thigh tracking.", asin: "B00076MD8K" }
     ]
   },
@@ -53,7 +53,7 @@ const gearCategories = [
                 <div class="mt-6">
                   <!-- Completely safe direct link construction string layout -->
                   <a 
-                    href={`https://amazon.com${item.asin}/?tag=${amazonTag}`}
+                    href={`https://amazon.com/${item.asin}/?tag=${amazonTag}`}
                     target="_blank" 
                     rel="noopener noreferrer" 
                     class="inline-block w-full text-center text-xs font-semibold tracking-wider uppercase bg-[#1e1b21] hover:bg-[#7a7480] text-white py-3 px-4 rounded transition-colors"
