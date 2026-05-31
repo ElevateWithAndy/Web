@@ -1,0 +1,2 @@
+# Prevent GitHub Pages from processing site with Jekyll
+# This ensures static files are served as-is (useful for Astro builds)
