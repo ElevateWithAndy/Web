@@ -1,21 +1,41 @@
 ---
 ---
-<!-- We add your signature grey here, and switch border colors to match -->
-<header style="background-color: #7a7480;" class="border-b border-[#69636e] sticky top-0 z-50 shadow-sm">
-  <div class="max-w-5xl mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-    <a href="/" class="group text-center sm:text-left">
-      <!-- Changed text colors to white and high-contrast light grey for readability -->
-      <span class="text-xl font-light tracking-widest text-white uppercase block">Elevate With Andy</span>
-      <span class="text-xs tracking-wider text-neutral-200 font-medium uppercase mt-0.5 block">Resilience in Motion</span>
-    </a>
-    <!-- Changed link navigation colors to pure white and subtle hover opacity shifts -->
-    <nav class="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-center text-sm tracking-wide uppercase font-medium text-white/90">
-      <!-- Each link has 'w-full sm:w-auto' to stack cleanly on mobile but sit side-by-side on desktop -->
-      <a href="/videos" class="w-full sm:w-auto block sm:inline hover:text-white transition-colors order-2 sm:order-none">Videos</a>
-      <a href="/LivingNotebook" class="w-full sm:w-auto block sm:inline hover:text-white transition-colors order-1 sm:order-none">Living Notebook</a>
-      <a href="/gear" class="w-full sm:w-auto block sm:inline hover:text-white transition-colors order-3 sm:order-none">Recommended Gear</a>
-    </nav>    
+<header class="sticky top-0 z-50 shadow-sm">
+  <!-- Top Tier: Signature Grey Background with White Text -->
+  <div style="background-color: #7a7480;" class="border-b border-[#69636e] relative">
+    <div class="max-w-5xl mx-auto px-6 pt-4 pb-4 flex flex-row justify-between items-center relative">
+      
+      <!-- Brand Logo Block -->
+      <a href="/" class="group text-left z-50">
+        <span class="text-xl font-light tracking-widest text-white uppercase block">Elevate With Andy</span>
+        <span class="text-xs tracking-wider text-neutral-200 font-medium uppercase mt-0.5 block">Resilience in Motion</span>
+      </a>
+      
+      <!-- 🌟 Universal Hamburger Toggle Button (Always Visible) -->
+      <button 
+        id="menu-toggle" 
+        aria-label="Toggle Navigation Menu" 
+        class="flex flex-col justify-center items-center w-8 h-8 gap-1.5 z-50 bg-transparent border-0 cursor-pointer focus:outline-none"
+      >
+        <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center" id="line1"></span>
+        <span class="w-6 h-0.5 bg-white transition-all duration-300" id="line2"></span>
+        <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center" id="line3"></span>
+      </button>
+      
+      <!-- 🌟 Navigation Menu Dropdown (Hidden until clicked on both Mobile and Desktop) -->
+      <nav 
+        id="nav-menu" 
+        class="hidden flex-col items-center gap-y-6 text-center text-sm tracking-wide uppercase font-medium text-white/90
+               absolute top-full left-0 w-full bg-[#7a7480] pb-8 pt-6 border-b border-[#69636e] z-40 transition-all duration-300 shadow-md"
+      >
+        <a href="/videos" class="hover:text-white transition-colors py-1">Videos</a>
+        <a href="/LivingNotebook" class="hover:text-white transition-colors py-1">Living Notebook</a>
+        <a href="/gear" class="hover:text-white transition-colors py-1">Recommended Gear</a>
+      </nav>
+      
+    </div>
   </div>
+
   <!-- Bottom Tier: Matches Page Canvas (#fcfbfc) with Centered Signature Grey Text -->
   <div class="bg-[#fcfbfc] border-b border-neutral-100 py-2.5">
     <div class="max-w-5xl mx-auto px-6 text-center">
@@ -25,3 +45,46 @@
     </div>
   </div>
 </header>
+
+<!-- 🌟 Lightweight Interactive Vanilla JS Handler -->
+<script>
+  function initMenu() {
+    const toggleBtn = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    const line1 = document.getElementById('line1');
+    const line2 = document.getElementById('line2');
+    const line3 = document.getElementById('line3');
+
+    if (toggleBtn && navMenu && line1 && line2 && line3) {
+      // Remove any leftover click listeners before attaching a fresh one
+      toggleBtn.replaceWith(toggleBtn.cloneNode(true));
+      const freshBtn = document.getElementById('menu-toggle');
+      
+      freshBtn?.addEventListener('click', () => {
+        const isOpen = navMenu.classList.contains('hidden');
+        
+        if (isOpen) {
+          // Open state transition calculations
+          navMenu.classList.remove('hidden');
+          navMenu.classList.add('flex');
+          
+          line1.classList.add('rotate-45', 'translate-y-2');
+          line2.classList.add('opacity-0', 'scale-0');
+          line3.classList.add('-rotate-45', '-translate-y-2');
+        } else {
+          // Close state recovery calculations
+          navMenu.classList.remove('flex');
+          navMenu.classList.add('hidden');
+          
+          line1.classList.remove('rotate-45', 'translate-y-2');
+          line2.classList.remove('opacity-0', 'scale-0');
+          line3.classList.remove('-rotate-45', '-translate-y-2');
+        }
+      });
+    }
+  }
+
+  // Hook into both traditional page load events and virtual Astro routing steps
+  initMenu();
+  document.addEventListener('astro:after-swap', initMenu);
+</script>
