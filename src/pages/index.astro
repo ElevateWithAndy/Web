@@ -1,14 +1,79 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// 1. Add your YouTube video database here
+const videos = [
+  {
+    title: "15-Minute Core Alignment & Tracking",
+    category: "Pilates",
+    youtubeUrl: "https://youtube.com",
+    thumbnail: "https://youtube.com"
+  },
+  {
+    title: "Graceful Posture & Balance Routine",
+    category: "Ballet",
+    youtubeUrl: "https://youtube.com",
+    thumbnail: "https://youtube.com"
+  },
+  {
+    title: "Thoracic Spine Mobility & Decompression",
+    category: "Functional Movement",
+    youtubeUrl: "https://youtube.com",
+    thumbnail: "https://youtube.com"
+  }
+];
+
+const categories = ["Functional Movement", "Pilates", "Ballet"];
 ---
-<BaseLayout title="Home" description="Welcome to Elevate with Andy">
-  <section class="card">
-    <h2>Welcome</h2>
-    <p>This site is built with Astro and configured to deploy to GitHub Pages.</p>
-    <ul>
-      <li><a href="/gear/">Recommended Gear</a></li>
-      <li><a href="/yt/">YouTube content</a></li>
-      <li><a href="/blog/">Blog</a></li>
-    </ul>
-  </section>
+
+<BaseLayout title="Elevate With Andy | Resilience in Motion">
+  <main class="max-w-5xl mx-auto px-6 py-16">
+    
+    <!-- Hero Header -->
+    <section class="text-center max-w-xl mx-auto mb-20">
+      <h1 class="text-4xl font-light tracking-widest text-[#1e1b21] uppercase">Resilience in Motion</h1>
+      <p class="text-sm text-[#7a7480] mt-4 leading-relaxed font-light">
+        Mindful movement designed to build structural depth, athletic grace, and structural alignment.
+      </p>
+    </section>
+
+    <!-- Video Collections Grid -->
+    <div class="space-y-16">
+      {categories.map(cat => {
+        const categoryVideos = videos.filter(v => v.category === cat);
+        if (categoryVideos.length === 0) return null;
+        
+        return (
+          <section>
+            <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase border-b border-neutral-100 pb-2 mb-8">{cat}</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {categoryVideos.map(video => (
+                <div class="group flex flex-col justify-between">
+                  <div>
+                    <div class="aspect-video w-full overflow-hidden bg-neutral-100 rounded-md mb-4 relative">
+                      <img 
+                        src={video.thumbnail} 
+                        alt={video.title} 
+                        class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-300"
+                      />
+                    </div>
+                    <h3 class="font-normal text-base text-[#1e1b21] leading-snug">{video.title}</h3>
+                  </div>
+                  <a 
+                    href={video.youtubeUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="text-xs font-semibold tracking-wider uppercase text-red-600 hover:text-red-700 mt-3 inline-flex items-center gap-1 transition-colors"
+                  >
+                    Watch Tutorial 
+                    <span class="text-sm font-normal">→</span>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      })}
+    </div>
+  </main>
 </BaseLayout>
