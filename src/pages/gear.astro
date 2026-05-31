@@ -1,28 +1,90 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// 🌟 LOCKED IN: Your active Amazon Tracking ID parameter
+// Your active Amazon Tracking ID parameter
 const amazonTag = "elevatewit027-20"; 
 
 const gearCategories = [
   {
-    category: "Small Functional Movement Props",
+    category: "Myofascial Release & Movement Mapping",
     items: [
-{ name: "Franklin Method Ball Set", desc: "Textured Franklin Method Balls for myofascial release", asin: "B002YQRF1A" },
-      { name: "Balanced Body Pilates Ring", desc: "14-inch flexible resistance ring with inner/outer padded grips for thigh tracking.", asin: "B00076MD8K" }
+      { 
+        name: "Franklin Method Ball Set", 
+        desc: "Textured alignment balls specifically designed for myofascial release, improving proprioceptive feedback, and smoothing out deep tissue tension.", 
+        asin: "B002YQRF1A",
+        imageId: "61u85r-O4HL"
+      },
+      { 
+        name: "OPTP Franklin Method Fascia Roll", 
+        desc: "A contoured roller engineered to comfortably cradle the limbs and spine, offering tailored myofascial decompression and bone-rolling assistance.", 
+        asin: "B00N26TZSW",
+        imageId: "71K-Xy3W0KL"
+      },
+      { 
+        name: "OPTP Franklin Method Bands", 
+        desc: "Premium, flexible resistance bands configured for dynamic alignment training, localized force distribution, and muscular feedback mapping.", 
+        asin: "B00FXTW2UY",
+        imageId: "71eI+uW-gOL"
+      },
+      { 
+        name: "TriggerPoint Grid Foam Roller", 
+        desc: "Features a multi-density exterior matrix over a rigid hollow core to simulate a therapist's hands, safely expanding spinal mobility.", 
+        asin: "B004OEGNIU",
+        imageId: "81D0Vz6HwXL"
+      }
     ]
   },
   {
-    category: "Functional Movement & Ballet",
+    category: "Pilates Core & Structural Balance",
     items: [
-      { name: "High-Density Foam Roller", desc: "36-inch roller for myofascial release, thoracic spine mobility, and posture alignment.", asin: "B00X3MOWE0" },
-      { name: "Professional Ballet Turning Board", desc: "Sturdy composite board to improve your spot, core engagement, and pirouette balance.", asin: "B019G7CPRE" }
+      { 
+        name: "Balanced Body Pilates Ring", 
+        desc: "A ultra-durable 14-inch core ring fitted with dual-sided molded padding to safely check and regulate leg alignment and adductor connection.", 
+        asin: "B002YQW3IU",
+        imageId: "71F0C9M2x6L"
+      },
+      { 
+        name: "Balanced Body Balance Pad", 
+        desc: "A safe, high-density unstable foam canvas designed to challenge deep ankle tracking, dynamic stability networks, and pelvic control.", 
+        asin: "B002YQY1SK",
+        imageId: "61m8E6G1YWL"
+      },
+      { 
+        name: "Balanced Body Pilates Arc", 
+        desc: "An ergonomic three-in-one spine corrector designed to decompress the thoracic spine, assist structural flexions, and safely scale core engagement.", 
+        asin: "B002XVSNRG",
+        imageId: "61-M0q9T59L"
+      },
+      { 
+        name: "Balanced Body Pilates Mat", 
+        desc: "An extra-thick, dense structural fitness mat engineered to pad and guard the spine and joint bases throughout complex rolling movements.", 
+        asin: "B009V29BQW",
+        imageId: "61O7wA52zBL"
+      },
+      { 
+        name: "Balanced Body Magic Roller", 
+        desc: "A resilient, full-length cylindrical roller designed for balance tracking, deep posture optimization, and long-term core stabilization sets.", 
+        asin: "B0D1V17XJF",
+        imageId: "71z-R3o8mRL"
+      },
+      { 
+        name: "Balanced Body Pilates Moon Box", 
+        desc: "A rigid, padded upholstery step block used to elevate the hips, stabilize seating posture, and correctly adjust height during core flows.", 
+        asin: "B00LONXKUO",
+        imageId: "61lscuK3qSL"
+      },
+      { 
+        name: "Pilates Parasetter", 
+        desc: "A specialized spinal alignment cradle built with dual channel reliefs to eliminate vertical rib flaring and ease overactive paraspinal tension.", 
+        asin: "B07MVMB34K",
+        imageId: "61g969jL1qL"
+      }
     ]
   }
 ];
 ---
 <BaseLayout title="Recommended Gear | Elevate With Andy">
-  <main class="max-w-4xl mx-auto px-6 py-16">
+  <main class="max-w-5xl mx-auto px-6 py-16">
     
     <!-- Editorial Page Intro -->
     <div class="text-center max-w-xl mx-auto mb-16">
@@ -30,36 +92,48 @@ const gearCategories = [
       <p class="text-sm text-[#7a7480] mt-3 leading-relaxed font-light">
         Tools and props curated to build resilience, alignment, and strength. Products featured here are used directly in my classes.
       </p>
-      <!-- Crucial Conspicuous FTC Legal Disclaimer Box -->
+      <!-- FTC Compliance Disclaimer Box -->
       <p class="text-[10px] text-neutral-400 italic mt-2">
         As an Amazon Associate, Elevate With Andy earns from qualifying purchases.
       </p>
     </div>
 
     <!-- Product Matrix Sections -->
-    <div class="space-y-16">
+    <div class="space-y-20">
       {gearCategories.map(cat => (
         <div>
-          <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase border-b border-neutral-100 pb-2 mb-6">
+          <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase border-b border-neutral-100 pb-2 mb-8">
             {cat.category}
           </h2>
-          <div class="grid md:grid-cols-2 gap-8">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {cat.items.map(item => (
-              <div class="flex flex-col justify-between p-6 bg-[#fcfbfc] border border-neutral-100 rounded-lg hover:border-[#7a7480]/20 transition-all shadow-sm">
-                <div>
-                  <h3 class="font-normal text-base text-[#1e1b21] uppercase tracking-wide">{item.name}</h3>
-                  <p class="text-sm text-[#7a7480] mt-2 leading-relaxed font-light">{item.desc}</p>
+              <div class="flex flex-col justify-between bg-white border border-neutral-100 rounded-lg overflow-hidden hover:border-[#7a7480]/20 transition-all shadow-sm group">
+                
+                <!-- 🖼️ Live Image Container Box -->
+                <div class="bg-white h-48 p-6 flex items-center justify-center border-b border-neutral-50 relative">
+                  <img 
+                    src={`https://media-amazon.com{item.imageId}._AC_SX300_.jpg`} 
+                    alt={item.name}
+                    loading="lazy"
+                    class="max-h-full max-w-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                  />
                 </div>
-                <div class="mt-6">
-                  <!-- Completely safe direct link construction string layout -->
-                  <a 
-                    href={`https://amazon.com/dp/${item.asin}/?tag=${amazonTag}`}
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="inline-block w-full text-center text-xs font-semibold tracking-wider uppercase bg-[#1e1b21] hover:bg-[#7a7480] text-white py-3 px-4 rounded transition-colors"
-                  >
-                    View on Amazon
-                  </a>
+
+                <div class="p-6 flex-grow flex flex-col justify-between bg-white">
+                  <div>
+                    <h3 class="font-normal text-base text-[#1e1b21] uppercase tracking-wide leading-snug">{item.name}</h3>
+                    <p class="text-xs text-[#7a7480] mt-2 leading-relaxed font-light line-clamp-3">{item.desc}</p>
+                  </div>
+                  <div class="mt-6">
+                    <a 
+                      href={`https://amazon.com{item.asin}/?tag=${amazonTag}`}
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="inline-block w-full text-center text-xs font-semibold tracking-wider uppercase bg-[#1e1b21] hover:bg-[#7a7480] text-white py-3 px-4 rounded transition-colors"
+                    >
+                      View on Amazon
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
