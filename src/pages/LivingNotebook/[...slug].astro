@@ -3,13 +3,13 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getCollection('LivingNotebook');
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: post,
   }));
 }
-type Props = CollectionEntry<'blog'>;
+type Props = CollectionEntry<'LivingNotebook'>;
 
 const post = Astro.props;
 const { Content } = await post.render();
@@ -18,7 +18,7 @@ const { Content } = await post.render();
 <BaseLayout title={`${post.data.title} | Elevate With Andy`}>
   <main class="max-w-2xl mx-auto px-6 py-16">
     <nav class="mb-12">
-      <a href="/blog" class="text-xs font-semibold tracking-wider uppercase text-[#7a7480] hover:text-[#1e1b21] transition-colors">
+      <a href="/LivingNotebook" class="text-xs font-semibold tracking-wider uppercase text-[#7a7480] hover:text-[#1e1b21] transition-colors">
         ← Back to journal
       </a>
     </nav>

@@ -2,8 +2,8 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Fetch the 2 most recent blog posts to feature at the bottom
-const rawPosts = await getCollection('blog') || [];
+// Fetch the 2 most recent LivingNotebook posts to feature at the bottom
+const rawPosts = await getCollection('LivingNotebook') || [];
 const recentPosts = rawPosts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 2);
@@ -12,21 +12,13 @@ const recentPosts = rawPosts
 <BaseLayout title="Elevate With Andy | Resilience in Motion">
   <!-- Section 1: Minimalist Hero Banner -->
   <section class="max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
-    <span class="text-xs font-semibold tracking-[0.25em] text-[#7a7480] uppercase block mb-4">Functional Movement • Pilates • Ballet</span>
+    <span class="text-xs font-semibold tracking-[0.25em] text-[#7a7480] uppercase block mb-4">Functional Movement • Restorative Rituals • Integrated Connection</span>
     <h1 class="text-4xl md:text-5xl font-light tracking-wide text-[#1e1b21] uppercase leading-tight">
       Cultivate a body that moves <br class="hidden md:inline"/> with depth, strength, and grace.
     </h1>
     <p class="text-base text-[#7a7480] mt-6 max-w-xl mx-auto font-light leading-relaxed">
       A structured approach to physical conditioning. Discover video training, movement breakdowns, and curated tools designed to build sustainable, long-term structural alignment.
     </p>
-    <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-      <a href="/blog" class="bg-[#1e1b21] hover:bg-[#7a7480] text-white text-xs font-semibold tracking-wider uppercase px-8 py-4 rounded transition-colors">
-        Read the Journal
-      </a>
-      <a href="/gear" class="border border-[#7a7480]/30 hover:border-[#1e1b21] text-[#1e1b21] text-xs font-semibold tracking-wider uppercase px-8 py-4 rounded transition-colors">
-        Explore Recommended Gear
-      </a>
-    </div>
   </section>
 
   <!-- Section 2: Three Pillars Showcase -->
@@ -69,7 +61,7 @@ const recentPosts = rawPosts
   <section class="max-w-4xl mx-auto px-6 py-20">
     <div class="flex justify-between items-end border-b border-neutral-100 pb-4 mb-10">
       <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase">Latest from the Journal</h2>
-      <a href="/blog" class="text-xs font-semibold uppercase tracking-wider text-[#1e1b21] hover:underline">View All Entries →</a>
+      <a href="/LivingNotebook" class="text-xs font-semibold uppercase tracking-wider text-[#1e1b21] hover:underline">View All Entries →</a>
     </div>
 
     {recentPosts.length === 0 ? (
@@ -82,7 +74,7 @@ const recentPosts = rawPosts
               {post.data.pubDate.toLocaleDateString('en-us', { month: 'long', day: 'numeric', year: 'numeric' })}
             </time>
             <h3 class="text-lg font-normal text-[#1e1b21] group-hover:text-[#7a7480] transition-colors uppercase tracking-wide">
-              <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+              <a href={`/LivingNotebook/${post.slug}/`}>{post.data.title}</a>
             </h3>
             <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
               {post.data.description}

@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 
-const blogCollection = defineCollection({
+const livingNotebookCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
@@ -13,5 +13,5 @@ const blogCollection = defineCollection({
 
 // The key here MUST match your folder name inside src/content/
 export const collections = {
-  'blog': blogCollection,
+  'LivingNotebook': livingNotebookCollection,
 };

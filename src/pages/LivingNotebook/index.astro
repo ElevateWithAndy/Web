@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 // Fetch the entries safely with fallback array tracking
-const rawPosts = await getCollection('blog') || [];
+const rawPosts = await getCollection('LivingNotebook') || [];
 const posts = rawPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
@@ -30,7 +30,7 @@ const posts = rawPosts.sort(
           </div>
           
           <h2 class="text-xl font-normal text-[#1e1b21] mt-3 group-hover:text-[#7a7480] transition-colors">
-            <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+            <a href={`/LivingNotebook/${post.slug}/`}>{post.data.title}</a>
           </h2>
           
           <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed max-w-2xl">
@@ -38,7 +38,7 @@ const posts = rawPosts.sort(
           </p>
           
           <div class="mt-4">
-            <a href={`/blog/${post.slug}/`} class="text-xs font-semibold tracking-wider uppercase text-[#1e1b21] hover:underline">
+            <a href={`/LivingNotebook/${post.slug}/`} class="text-xs font-semibold tracking-wider uppercase text-[#1e1b21] hover:underline">
               Read Entry →
             </a>
           </div>
