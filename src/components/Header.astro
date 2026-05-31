@@ -2,7 +2,8 @@
 ---
 <header class="sticky top-0 z-50 shadow-sm">
   <!-- Top Tier: Signature Grey Background with White Text -->
-  <div style="background-color: #7a7480;" class="border-b border-[#69636e] relative">
+  <div style="background-color: #7a7480;" class="border-b border-[#69636e]">
+    <!-- The 'relative' class here anchors the floating desktop menu card correctly -->
     <div class="max-w-5xl mx-auto px-6 pt-4 pb-4 flex flex-row justify-between items-center relative">
       
       <!-- Brand Logo Block -->
@@ -11,7 +12,7 @@
         <span class="text-xs tracking-wider text-neutral-200 font-medium uppercase mt-0.5 block">Resilience in Motion</span>
       </a>
       
-      <!-- 🌟 Universal Hamburger Toggle Button (Always Visible) -->
+      <!-- Universal Hamburger Toggle Button -->
       <button 
         id="menu-toggle" 
         aria-label="Toggle Navigation Menu" 
@@ -22,15 +23,17 @@
         <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center" id="line3"></span>
       </button>
       
-      <!-- 🌟 Navigation Menu Dropdown (Hidden until clicked on both Mobile and Desktop) -->
+      <!-- Navigation Menu Dropdown (Full width on mobile, compact right-aligned card on desktop) -->
       <nav 
         id="nav-menu" 
-        class="hidden flex-col items-center gap-y-6 text-center text-sm tracking-wide uppercase font-medium text-white/90
-               absolute top-full left-0 w-full bg-[#7a7480] pb-8 pt-6 border-b border-[#69636e] z-40 transition-all duration-300 shadow-md"
+        class="hidden flex-col items-center gap-y-5 text-center text-sm tracking-wide uppercase font-medium text-white/90
+               absolute top-full left-0 w-full bg-[#7a7480] pb-6 pt-6 border-b border-[#69636e] z-40 shadow-md
+               sm:left-auto sm:right-6 sm:w-64 sm:rounded-lg sm:border sm:mt-2"
       >
-        <a href="/videos" class="hover:text-white transition-colors py-1">Videos</a>
-        <a href="/LivingNotebook" class="hover:text-white transition-colors py-1">Living Notebook</a>
-        <a href="/gear" class="hover:text-white transition-colors py-1">Recommended Gear</a>
+        <a href="/videos" class="w-full hover:text-white hover:bg-white/5 py-2 transition-colors">Videos</a>
+        <!-- 🌟 Locked In: Direct path routing to your Living Notebook -->
+        <a href="/LivingNotebook" class="w-full hover:text-white hover:bg-white/5 py-2 transition-colors">Living Notebook</a>
+        <a href="/gear" class="w-full hover:text-white hover:bg-white/5 py-2 transition-colors">Recommended Gear</a>
       </nav>
       
     </div>
@@ -46,7 +49,7 @@
   </div>
 </header>
 
-<!-- 🌟 Lightweight Interactive Vanilla JS Handler -->
+<!-- Lightweight Interactive Vanilla JS Handler -->
 <script>
   function initMenu() {
     const toggleBtn = document.getElementById('menu-toggle');
@@ -56,7 +59,6 @@
     const line3 = document.getElementById('line3');
 
     if (toggleBtn && navMenu && line1 && line2 && line3) {
-      // Remove any leftover click listeners before attaching a fresh one
       toggleBtn.replaceWith(toggleBtn.cloneNode(true));
       const freshBtn = document.getElementById('menu-toggle');
       
@@ -64,7 +66,6 @@
         const isOpen = navMenu.classList.contains('hidden');
         
         if (isOpen) {
-          // Open state transition calculations
           navMenu.classList.remove('hidden');
           navMenu.classList.add('flex');
           
@@ -72,7 +73,6 @@
           line2.classList.add('opacity-0', 'scale-0');
           line3.classList.add('-rotate-45', '-translate-y-2');
         } else {
-          // Close state recovery calculations
           navMenu.classList.remove('flex');
           navMenu.classList.add('hidden');
           
@@ -84,7 +84,6 @@
     }
   }
 
-  // Hook into both traditional page load events and virtual Astro routing steps
   initMenu();
   document.addEventListener('astro:after-swap', initMenu);
 </script>
