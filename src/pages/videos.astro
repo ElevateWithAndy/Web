@@ -1,0 +1,68 @@
+---
+import Parser from 'rss-parser';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const parser = new Parser();
+let dynamicVideos = [];
+
+try {
+  // Replace with your real YouTube Channel ID (Keep the UC prefix)
+  const channelId = "UCIz5Ip_0-j4m7T2PSA34G3A"; 
+  const feed = await parser.parseURL(`https://youtube.com{channelId}`);
+  
+  // Map out the fields from YouTube's automated syndication structure
+  dynamicVideos = feed.items.map(item => {
+    // Extract YouTube's unique video ID from the atom link structure
+    const videoId = item.link ? item.link.split('v=')[1] : '';
+    return {
+      title: item.title,
+      youtubeUrl: item.link,
+      // Grabs the high-res thumbnail directly using the extracted ID
+      thumbnail: `https://youtube.com{videoId}/maxresdefault.jpg`
+    };
+  }).slice(0, 6); // Change 6 to limit how many recent videos display
+} catch (error) {
+  console.error("Error fetching YouTube RSS stream:", error);
+}
+---
+
+<BaseLayout title="Video Practice Index | Elevate With Andy">
+  <main class="max-w-5xl mx-auto px-6 py-16">
+    <div class="text-center max-w-xl mx-auto mb-16">
+      <h1 class="text-3xl font-light tracking-wide text-[#1e1b21] uppercase">On-Demand Practice</h1>
+      <p class="text-sm text-[#7a7480] mt-3 font-light">The latest sequences streamed directly from the channel.</p>
+    </div>
+
+    {dynamicVideos.length === 0 ? (
+      <p class="text-center text-sm text-[#7a7480] italic">Streaming sync momentarily unavailable.</p>
+    ) : (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {dynamicVideos.map(video => (
+          <div class="group flex flex-col justify-between">
+            <div>
+              <div class="aspect-video w-full overflow-hidden bg-neutral-100 rounded-md mb-4 shadow-sm">
+                <img 
+                  src={video.thumbnail} 
+                  alt={video.title} 
+                  loading="lazy"
+                  class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-300"
+                />
+              </div>
+              <h3 class="font-normal text-base text-[#1e1b21] leading-snug line-clamp-2">{video.title}</h3>
+            </div>
+            <div class="mt-4">
+              <a 
+                href={video.youtubeUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="text-xs font-semibold tracking-wider uppercase text-red-600 hover:text-red-700 inline-flex items-center gap-1 transition-colors"
+              >
+                Watch on YouTube →
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </main>
+</BaseLayout>
