@@ -1,0 +1,36 @@
+---
+const currentYear = new Date().getFullYear();
+---
+<!-- We use your signature grey (#7a7480) and a subtle top border for depth -->
+<footer style="background-color: #7a7480;" class="border-t border-[#69636e] py-12 mt-auto text-white">
+  <div class="max-w-5xl mx-auto px-6">
+    
+    <!-- Top Row: Branding and Quick External Links -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6 pb-8 border-b border-white/10">
+      <div class="text-center md:text-left">
+        <span class="text-sm font-light tracking-widest uppercase block">Elevate With Andy</span>
+        <span class="text-[10px] tracking-wider text-neutral-200 uppercase block mt-1">Resilience in Motion</span>
+      </div>
+      
+      <nav class="flex flex-wrap justify-center gap-6 text-[10px] tracking-widest uppercase font-semibold text-neutral-200">
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">
+          YouTube Channel
+        </a>
+        <a href="/videos" class="hover:text-white transition-colors">Videos</a>
+        <a href="/LivingNotebook" class="hover:text-white transition-colors">Living Notebook</a>
+        <a href="/gear" class="hover:text-white transition-colors">Recommended Gear</a>
+      </nav>
+    </div>
+
+    <!-- Bottom Row: Copyright and Obligatory Amazon Affiliate Disclosure -->
+    <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-neutral-300 font-light tracking-wide text-center md:text-left">
+      <p>© {currentYear} Elevate With Andy. All Rights Reserved.</p>
+      
+      <!-- This disclosure statement satisfies Amazon's strict compliance policies site-wide -->
+      <p class="max-w-md md:text-right leading-relaxed italic text-neutral-200/80">
+        As an Amazon Associate, Elevate With Andy earns from qualifying purchases made through recommended gear links.
+      </p>
+    </div>
+
+  </div>
+</footer>
