@@ -12,97 +12,22 @@ if (typeof Astro.site === 'string' && Astro.site.length > 0) {
 }
 if (!basePath.endsWith('/')) basePath += '/';
 ---
-<!DOCTYPE html>
+import Header from '../components/Header.astro';
+const { title } = Astro.props;
+---
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title ? `${title} · Elevate with Andy` : 'Elevate with Andy'}</title>
-    <meta name="description" content={description ?? 'Elevate with Andy — personal site and resources.'} />
-    <style>
-      :root {
-        color-scheme: light;
-      }
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        line-height: 1.6;
-        background: #f6f7fb;
-        color: #111827;
-      }
-      a {
-        color: #2563eb;
-      }
-      header,
-      main,
-      footer {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 1.5rem;
-      }
-      header {
-        padding-top: 2rem;
-      }
-      nav a {
-        margin-right: 1rem;
-      }
-      .page-title {
-        margin-top: 0;
-      }
-      .card {
-        background: white;
-        border: 1px solid #e5e7eb;
-        border-radius: 1rem;
-        padding: 1.25rem;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-      }
-      .post-list {
-        display: grid;
-        gap: 1rem;
-        margin: 0;
-        padding: 0;
-      }
-      .post-card {
-        background: white;
-        border: 1px solid #d1d5db;
-        border-radius: 1rem;
-        padding: 1rem 1.25rem;
-        box-shadow: 0 1px 6px rgba(15, 23, 42, 0.06);
-      }
-      .post-card h3 {
-        margin: 0 0 0.5rem;
-      }
-      .post-card a {
-        color: #1d4ed8;
-        text-decoration: none;
-      }
-      .post-card a:hover {
-        text-decoration: underline;
-      }
-      .post-meta {
-        color: #6b7280;
-        font-size: 0.95rem;
-        margin-bottom: 0.75rem;
-      }
-    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
   </head>
-  <body>
-    <header>
-      <p><a href={basePath}>← Home</a></p>
-      <h1 class="page-title">Elevate with Andy</h1>
-      <p>{description ?? 'Simple Astro site for GitHub Pages.'}</p>
-      <nav>
-        <a href={basePath}>Home</a>
-        <a href={`${basePath}recommended/`}>Recommended</a>
-        <a href={`${basePath}yt/`}>YouTube</a>
-        <a href={`${basePath}blog/`}>Blog</a>
-      </nav>
-    </header>
-    <main>
-      <slot />
-    </main>
-    <footer>
-      <p>Built with Astro and deployed to GitHub Pages.</p>
-    </footer>
+  <body class="bg-white text-neutral-900 font-sans">
+    
+    <!-- Placing it here automatically renders it on EVERY page that uses this layout -->
+    <Header /> 
+    
+    <slot /> <!-- This is where your page content injects -->
+    
   </body>
 </html>
