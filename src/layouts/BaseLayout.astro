@@ -1,0 +1,69 @@
+---
+const { title, description } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title ? `${title} · Elevate with Andy` : 'Elevate with Andy'}</title>
+    <meta name="description" content={description ?? 'Elevate with Andy — personal site and resources.'} />
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        line-height: 1.6;
+        background: #f6f7fb;
+        color: #111827;
+      }
+      a {
+        color: #2563eb;
+      }
+      header,
+      main,
+      footer {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 1.5rem;
+      }
+      header {
+        padding-top: 2rem;
+      }
+      nav a {
+        margin-right: 1rem;
+      }
+      .page-title {
+        margin-top: 0;
+      }
+      .card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 1rem;
+        padding: 1.25rem;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Home</a></p>
+      <h1 class="page-title">Elevate with Andy</h1>
+      <p>{description ?? 'Simple Astro site for GitHub Pages.'}</p>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/recommended/">Recommended</a>
+        <a href="/yt/">YouTube</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <p>Built with Astro and deployed to GitHub Pages.</p>
+    </footer>
+  </body>
+</html>

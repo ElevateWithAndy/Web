@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Redirecting to YouTube...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>
+        window.onload = function () {
+            var channelUrl = "https://www.youtube.com/@ElevatewithAndy";
+            var appScheme = "youtube://www.youtube.com/@ElevatewithAndy";
+            var isMobile = /(iphone|ipad|ipod|android)/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                window.location.href = appScheme;
+                setTimeout(function () {
+                    window.location.href = channelUrl;
+                }, 1200);
+            } else {
+                window.location.href = channelUrl;
+            }
+        };
+    </script>
+</head>
+<body style="background:#ffffff; margin:0;">
+    <p style="font-family: system-ui, sans-serif; padding: 1rem;">
+        Redirecting to YouTube... <a href="https://www.youtube.com/@ElevatewithAndy">Click here if the redirect does not work</a>.
+    </p>
+</body>
+</html>
+
