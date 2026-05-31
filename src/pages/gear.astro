@@ -35,11 +35,11 @@ const gearCategories = [
     ]
   },
   {
-    category: "Pilates Core & Structural Balance",
+    category: "Functional Movement Props",
     items: [
       { 
         name: "Balanced Body Pilates Ring", 
-        desc: "A ultra-durable 14-inch core ring fitted with dual-sided molded padding to safely check and regulate leg alignment and adductor connection.", 
+        desc: "An ultra-durable 14-inch core ring fitted with dual-sided molded padding to safely check and regulate leg alignment and adductor connection.", 
         asin: "B002YQW3IU",
         imageId: "71F0C9M2x6L"
       },
@@ -78,6 +78,35 @@ const gearCategories = [
         desc: "A specialized spinal alignment cradle built with dual channel reliefs to eliminate vertical rib flaring and ease overactive paraspinal tension.", 
         asin: "B07MVMB34K",
         imageId: "61g969jL1qL"
+      },
+      { 
+        name: "Travel Item Placeholder 1", 
+        desc: "Replace this text with your custom travel recommendation overview. Describe how it helps body alignment on the go.", 
+        asin: "B00REPLACE1",
+        imageId: "default" // See instructions below to replace imageId
+      },
+      { 
+        name: "Travel Item Placeholder 2", 
+        desc: "Replace this text with your second travel item description.", 
+        asin: "B00REPLACE2",
+        imageId: "default"
+      }
+    ]
+  },
+  {
+    category: "D&D Essentials",
+    items: [
+      { 
+        name: "D&D Item Placeholder 1", 
+        desc: "Replace this text with details about your favorite Dungeons & Dragons tabletop gear, dice, manuals, or posture helpers for long sessions.", 
+        asin: "B00REPLACE3",
+        imageId: "default"
+      },
+      { 
+        name: "D&D Item Placeholder 2", 
+        desc: "Replace this text with your second campaign gear recommendation.", 
+        asin: "B00REPLACE4",
+        imageId: "default"
       }
     ]
   }
@@ -111,12 +140,18 @@ const gearCategories = [
                 
                 <!-- 🖼️ Live Image Container Box -->
                 <div class="bg-white h-48 p-6 flex items-center justify-center border-b border-neutral-50 relative">
-                  <img 
-                    src={`https://media-amazon.com{item.imageId}._AC_SX300_.jpg`} 
-                    alt={item.name}
-                    loading="lazy"
-                    class="max-h-full max-w-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100 transition-opacity duration-300"
-                  />
+                  {item.imageId === "default" ? (
+                    <div class="text-center text-[10px] uppercase font-medium tracking-wider text-neutral-300 border border-dashed border-neutral-200 rounded p-4">
+                      Image coming soon
+                    </div>
+                  ) : (
+                    <img 
+                      src={`https://media-amazon.com{item.imageId}._AC_SX300_.jpg`} 
+                      alt={item.name}
+                      loading="lazy"
+                      class="max-h-full max-w-full object-contain mix-blend-multiply opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+                  )}
                 </div>
 
                 <div class="p-6 flex-grow flex flex-col justify-between bg-white">
