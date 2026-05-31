@@ -68,19 +68,31 @@ const structuredCategories = await Promise.all(
         Sequences and training sets sorted by movement discipline.
       </p>
     </div>
-
     <!-- Playlist Section Divider Blocks -->
-    <div class="space-y-20">
+    <div class="space-y-24">
       {structuredCategories.map(category => (
-        category.videos.length > 0 && (
-          <section>
-            <!-- Your signature gray (#7a7480) used as an elegant structural text rule -->
-            <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase border-b border-neutral-100 pb-2 mb-8">
+        // 1. REMOVED the "category.videos.length > 0 &&" condition so it always shows
+        <section>
+          <!-- Title Bar Grouping -->
+          <div class="border-b border-neutral-100 pb-4 mb-8">
+            <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase">
               {category.name}
             </h2>
-            <p class="text-xs text-[#7a7480] font-light mt-1 max-w-2xl leading-relaxed">
-                {category.description}
+            <p class="text-xs text-[#7a7480] font-light mt-2 max-w-2xl leading-relaxed whitespace-pre-line">
+              {category.description}
             </p>
+          </div>
+          
+          <!-- 2. ADDED a conditional check inside the grid block -->
+          {category.videos.length === 0 ? (
+            // Minimalist placeholder for empty rows
+            <div class="py-12 px-6 border border-dashed border-neutral-200 rounded-lg text-center max-w-sm">
+              <p class="text-xs text-[#7a7480] font-light italic">
+                New movement sequences coming soon to this collection.
+              </p>
+            </div>
+          ) : (
+            // Grid Matrix Display for active videos
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {category.videos.map(video => (
                 <div class="group flex flex-col justify-between bg-white border border-neutral-100 rounded-lg p-4 shadow-sm hover:border-[#7a7480]/20 transition-all">
@@ -109,8 +121,8 @@ const structuredCategories = await Promise.all(
                 </div>
               ))}
             </div>
-          </section>
-        )
+          )}
+        </section>
       ))}
     </div>
   </main>
