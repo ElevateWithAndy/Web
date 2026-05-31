@@ -1,79 +1,114 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// 1. Add your YouTube video database here
-const videos = [
-  {
-    title: "15-Minute Core Alignment & Tracking",
-    category: "Pilates",
-    youtubeUrl: "https://youtube.com",
-    thumbnail: "https://youtube.com"
-  },
-  {
-    title: "Graceful Posture & Balance Routine",
-    category: "Ballet",
-    youtubeUrl: "https://youtube.com",
-    thumbnail: "https://youtube.com"
-  },
-  {
-    title: "Thoracic Spine Mobility & Decompression",
-    category: "Functional Movement",
-    youtubeUrl: "https://youtube.com",
-    thumbnail: "https://youtube.com"
-  }
-];
-
-const categories = ["Functional Movement", "Pilates", "Ballet"];
+// Fetch the 2 most recent blog posts to feature at the bottom
+const rawPosts = await getCollection('blog') || [];
+const recentPosts = rawPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
 ---
 
 <BaseLayout title="Elevate With Andy | Resilience in Motion">
-  <main class="max-w-5xl mx-auto px-6 py-16">
-    
-    <!-- Hero Header -->
-    <section class="text-center max-w-xl mx-auto mb-20">
-      <h1 class="text-4xl font-light tracking-widest text-[#1e1b21] uppercase">Resilience in Motion</h1>
-      <p class="text-sm text-[#7a7480] mt-4 leading-relaxed font-light">
-        Mindful movement designed to build structural depth, athletic grace, and structural alignment.
-      </p>
-    </section>
-
-    <!-- Video Collections Grid -->
-    <div class="space-y-16">
-      {categories.map(cat => {
-        const categoryVideos = videos.filter(v => v.category === cat);
-        if (categoryVideos.length === 0) return null;
-        
-        return (
-          <section>
-            <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase border-b border-neutral-100 pb-2 mb-8">{cat}</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {categoryVideos.map(video => (
-                <div class="group flex flex-col justify-between">
-                  <div>
-                    <div class="aspect-video w-full overflow-hidden bg-neutral-100 rounded-md mb-4 relative">
-                      <img 
-                        src={video.thumbnail} 
-                        alt={video.title} 
-                        class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-300"
-                      />
-                    </div>
-                    <h3 class="font-normal text-base text-[#1e1b21] leading-snug">{video.title}</h3>
-                  </div>
-                  <a 
-                    href={video.youtubeUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="text-xs font-semibold tracking-wider uppercase text-red-600 hover:text-red-700 mt-3 inline-flex items-center gap-1 transition-colors"
-                  >
-                    Watch Tutorial 
-                    <span class="text-sm font-normal">→</span>
-                  </a>
-                </div>
-              ))}
-            </div>
-          </section>
-        )
-      })}
+  <!-- Section 1: Minimalist Hero Banner -->
+  <section class="max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
+    <span class="text-xs font-semibold tracking-[0.25em] text-[#7a7480] uppercase block mb-4">Functional Movement • Pilates • Ballet</span>
+    <h1 class="text-4xl md:text-5xl font-light tracking-wide text-[#1e1b21] uppercase leading-tight">
+      Cultivate a body that moves <br class="hidden md:inline"/> with depth, strength, and grace.
+    </h1>
+    <p class="text-base text-[#7a7480] mt-6 max-w-xl mx-auto font-light leading-relaxed">
+      A structured approach to physical conditioning. Discover video training, movement breakdowns, and curated tools designed to build sustainable, long-term structural alignment.
+    </p>
+    <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+      <a href="/blog" class="bg-[#1e1b21] hover:bg-[#7a7480] text-white text-xs font-semibold tracking-wider uppercase px-8 py-4 rounded transition-colors">
+        Read the Journal
+      </a>
+      <a href="/gear" class="border border-[#7a7480]/30 hover:border-[#1e1b21] text-[#1e1b21] text-xs font-semibold tracking-wider uppercase px-8 py-4 rounded transition-colors">
+        Explore Recommended Gear
+      </a>
     </div>
-  </main>
+  </section>
+
+  <!-- Section 2: Three Pillars Showcase -->
+  <section class="bg-[#fcfbfc] border-y border-neutral-100 py-20">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase text-center mb-12">The Foundations</h2>
+      
+      <div class="grid md:grid-cols-3 gap-12">
+        <!-- Pillar 1 -->
+        <div class="text-center group">
+          <div class="w-12 h-12 rounded-full bg-[#7a7480]/10 flex items-center justify-center mx-auto mb-4 text-[#7a7480] font-light text-xl">01</div>
+          <h3 class="font-normal text-lg text-[#1e1b21] uppercase tracking-wide">Functional Movement</h3>
+          <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
+            Decompress joints, optimize posture, and re-pattern daily alignment to unlock pain-free physical mobility.
+          </p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="text-center group">
+          <div class="w-12 h-12 rounded-full bg-[#7a7480]/10 flex items-center justify-center mx-auto mb-4 text-[#7a7480] font-light text-xl">02</div>
+          <h3 class="font-normal text-lg text-[#1e1b21] uppercase tracking-wide">Classical Pilates</h3>
+          <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
+            Deeply activate core stabilization networks while strengthening muscular symmetry and pelvic control.
+          </p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="text-center group">
+          <div class="w-12 h-12 rounded-full bg-[#7a7480]/10 flex items-center justify-center mx-auto mb-4 text-[#7a7480] font-light text-xl">03</div>
+          <h3 class="font-normal text-lg text-[#1e1b21] uppercase tracking-wide">Ballet Artistry</h3>
+          <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
+            Refine limb extensions, build dynamic balance, and introduce athletic coordination through graceful technique.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Latest Snippets from the Journal -->
+  <section class="max-w-4xl mx-auto px-6 py-20">
+    <div class="flex justify-between items-end border-b border-neutral-100 pb-4 mb-10">
+      <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase">Latest from the Journal</h2>
+      <a href="/blog" class="text-xs font-semibold uppercase tracking-wider text-[#1e1b21] hover:underline">View All Entries →</a>
+    </div>
+
+    {recentPosts.length === 0 ? (
+      <p class="text-sm text-[#7a7480] font-light italic">New journal reflections coming soon.</p>
+    ) : (
+      <div class="grid md:grid-cols-2 gap-12">
+        {recentPosts.map(post => (
+          <article class="group">
+            <time class="text-xs text-[#7a7480] font-light block mb-2">
+              {post.data.pubDate.toLocaleDateString('en-us', { month: 'long', day: 'numeric', year: 'numeric' })}
+            </time>
+            <h3 class="text-lg font-normal text-[#1e1b21] group-hover:text-[#7a7480] transition-colors uppercase tracking-wide">
+              <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+            </h3>
+            <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
+              {post.data.description}
+            </p>
+          </article>
+        ))}
+      </div>
+    )}
+  </section>
+
+  <!-- Section 4: Video Hub Redirect Callout -->
+  <section class="bg-[#1e1b21] text-white py-16 text-center">
+    <div class="max-w-xl mx-auto px-6">
+      <h2 class="text-xs font-bold tracking-widest text-neutral-400 uppercase mb-3">On-Demand Practice</h2>
+      <h3 class="text-2xl font-light uppercase tracking-wide">Looking for full video tutorials?</h3>
+      <p class="text-sm text-neutral-300 font-light mt-3 leading-relaxed">
+        My full categorized library of technique demonstrations and movement flows is safely hosted directly on YouTube.
+      </p>
+      <div class="mt-8">
+        <a 
+          href="/videos" 
+          class="inline-block bg-white hover:bg-neutral-100 text-[#1e1b21] text-xs font-semibold tracking-wider uppercase px-6 py-3 rounded transition-colors"
+        >
+          Browse Video Index
+        </a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
