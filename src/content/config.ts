@@ -10,8 +10,19 @@ const livingNotebookCollection = defineCollection({
     tags: z.array(z.string()).optional(),
   }),
 });
+// 🌟 ADD THIS: Define the JSON Schema for your Gear Items
+const gear = defineCollection({
+  type: 'data', // 'data' tells Astro this is a JSON/YAML file, not markdown
+  schema: z.object({
+    category: z.string(),
+    items: z.array(
+      z.object({
+        name: z.string(),
+        desc: z.string(),
+        asin: z.string(),
+      })
+    ),
+  }),
+});
 
-// The key here MUST match your folder name inside src/content/
-export const collections = {
-  'LivingNotebook': livingNotebookCollection,
-};
+export const collections = { livingNotebookCollection, gear };
