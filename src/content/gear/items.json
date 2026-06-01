@@ -25,8 +25,9 @@
   {
     "category": "D&D Essentials",
     "items": [
-      { "name": "D&D Item Placeholder 1", "desc": "Replace this text with details about your favorite Dungeons & Dragons tabletop gear, dice cases, adventure journals, or posture helpers for long campaign sessions.", "asin": "B00REPLACE3" },
-      { "name": "D&D Item Placeholder 2", "desc": "Replace this text with your second campaign gear recommendation.", "asin": "B00REPLACE4" }
+      { "name": "Melee Mats Map Starter", "desc": "", "asin": "B087YGCH31" },
+      { "name": "Melee Mats Map Starter", "desc": ".", "asin": "B076HCL2VC" },
+      { "name": "Heroes of the Borderland Starter Set", "desc": "A great way to get my young nephews involved and started in the world of Dungeons & Dragons.", "asin": "B0FDJFR245" }
     ]
   },
   {
