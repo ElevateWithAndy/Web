@@ -13,34 +13,14 @@ export async function getStaticPaths() {
 const post = Astro.props;
 const { Content } = await post.render();
 
+// Automatically detects whether to use 'elevate' or 'dnd' layout styles
 const layoutType = post.data.layoutType || 'elevate';
-
-// 🌟 ELEVATE THEME: Ultra-clean editorial layout with forced styling layers
-const elevateStyles = `
-  max-w-none font-sans text-sm text-[#1e1b21] leading-relaxed space-y-6
-  [&_h2]:text-base [&_h2]:font-normal [&_h2]:uppercase [&_h2]:tracking-wider [&_h2]:text-[#1e1b21] [&_h2]:pt-6 [&_h2]:block
-  [&_h3]:text-sm [&_h3]:font-medium [&_h3]:text-[#7a7480] [&_h3]:pt-4 [&_h3]:block
-  [&_p]:leading-relaxed [&_p]:text-neutral-700
-  [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-2 [&_ul]:text-neutral-600
-  [&_blockquote]:border-l-2 [&_blockquote]:border-[#7a7480] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-[#7a7480] [&_blockquote]:my-6
-`;
-
-// 🌟 D&D THEME: Fantasy novel layout with explicit, forced borders and background blocks
-const dndStyles = `
-  max-w-none font-serif text-base text-neutral-900 leading-relaxed space-y-6
-  [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#78350f] [&_h2]:border-b [&_h2]:border-[#b45309]/30 [&_h2]:pb-2 [&_h2]:pt-8 [&_h2]:block
-  [&_h3]:text-base [&_h3]:font-semibold [&_h3]:text-[#92400e] [&_h3]:pt-4 [&_h3]:block
-  [&_p]:leading-relaxed [&_p]:text-neutral-800
-  [&_ul]:list-inside [&_ul]:pl-5 [&_ul]:space-y-2 [&_ul]:text-neutral-700
-  [&_strong]:font-bold [&_strong]:text-[#78350f]
-  [&_blockquote]:bg-[#fefbe8] [&_blockquote]:border-l-4 [&_blockquote]:border-[#b45309] [&_blockquote]:p-5 [&_blockquote]:rounded-r [&_blockquote]:italic [&_blockquote]:text-[#78350f] [&_blockquote]:my-6 [&_blockquote]:block [&_blockquote]:shadow-sm
-`;
 ---
 
 <BaseLayout title={`${post.data.title} | Elevate With Andy`}>
   <main class="max-w-2xl mx-auto px-6 py-20">
     
-    <!-- Navigation Layer -->
+    <!-- Minimalist Back Navigation Layer -->
     <nav class="mb-16">
       <a href="/LivingNotebook" class="text-xs font-semibold tracking-widest uppercase text-[#7a7480] hover:text-[#1e1b21] inline-flex items-center gap-2 transition-colors group">
         <span class="text-sm transform group-hover:-translate-x-1 transition-transform">←</span> 
@@ -48,12 +28,13 @@ const dndStyles = `
       </a>
     </nav>
     
-    <article>
+    <!-- 🌟 The layoutType class here toggles the global styling rules written in the style tag below -->
+    <article class={`notebook-article theme-${layoutType}`}>
       <header class="mb-12 pb-8 border-b border-neutral-100">
         <time class="text-xs text-[#7a7480] tracking-widest font-medium uppercase block mb-3">
           {post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}
         </time>
-        <h1 class={`text-3xl font-light leading-snug uppercase tracking-wide max-w-xl ${layoutType === 'dnd' ? 'text-[#78350f] font-serif' : 'text-[#1e1b21] font-sans'}`}>
+        <h1 class="entry-title text-3xl font-light leading-snug uppercase tracking-wide max-w-xl">
           {post.data.title}
         </h1>
         {post.data.description && (
@@ -61,18 +42,113 @@ const dndStyles = `
         )}
       </header>
 
-      <!-- Dynamic typography container using our explicit style variables -->
-      <div class={layoutType === 'dnd' ? dndStyles : elevateStyles}>
+      <!-- The raw markdown content gets cleanly injected here -->
+      <div class="content-wrapper">
         <Content />
       </div>
     </article>
   </main>
 </BaseLayout>
 
+<!-- 🌟 NATIVE GLOBAL CSS ENGINE: Guaranteed to render across all devices and networks -->
 <style is:global>
-  /* Explicitly targets and structures list formats across D&D article instances */
-  .font-serif ul {
+  /* ==========================================================================
+     1. GLOBAL BASE RESET
+     ========================================================================== */
+  .content-wrapper p {
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+  }
+  .content-wrapper ul, .content-wrapper ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  /* ==========================================================================
+     2. ELEVATE THEME STYLES (Minimalist Editorial Layout)
+     ========================================================================== */
+  .theme-elevate {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+  .theme-elevate .entry-title {
+    color: #1e1b21;
+  }
+  .theme-elevate .content-wrapper {
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: #262626;
+  }
+  .theme-elevate .content-wrapper h2 {
+    font-size: 1rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    tracking-content: 0.05em;
+    color: #1e1b21;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .theme-elevate .content-wrapper ul {
+    list-style-type: disc;
+  }
+  .theme-elevate .content-wrapper blockquote {
+    border-left: 2px solid #7a7480;
+    padding-left: 1rem;
+    font-style: italic;
+    color: #7a7480;
+    margin: 1.5rem 0;
+  }
+
+  /* ==========================================================================
+     3. D&D THEME STYLES (Book-Style Fantasy Layout)
+     ========================================================================== */
+  .theme-dnd {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+  .theme-dnd .entry-title {
+    color: #78350f; /* Forced Deep Amber Title */
+  }
+  .theme-dnd .content-wrapper {
+    font-size: 1rem;
+    color: #1c1917;
+  }
+  /* 🌟 FORCED BORDERS & UNDERLINES: Renders a solid amber divider beneath headings */
+  .theme-dnd .content-wrapper h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #78350f;
+    border-bottom: 1px solid #b45309; /* Deep gold/amber bottom border */
+    padding-bottom: 0.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .theme-dnd .content-wrapper h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #92400e;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  /* 🌟 FORCED SQUARE BULLETS: Overrides browser defaults to display crisp square points */
+  .theme-dnd .content-wrapper ul {
     list-style-type: square !important;
-    padding-left: 1.25rem !important;
+  }
+  .theme-dnd .content-wrapper li {
+    margin-bottom: 0.5rem;
+  }
+  .theme-dnd .content-wrapper strong {
+    font-weight: 700;
+    color: #78350f;
+  }
+  /* 🌟 FORCED SHADING: Renders a warm parchment-tint background block container */
+  .theme-dnd .content-wrapper blockquote {
+    background-color: #fffbeb !important; /* Explicitly forced warm yellow tint */
+    border-left: 4px solid #b45309 !important; /* Thick rust-amber left rule bar */
+    padding: 1.25rem !important;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    font-style: italic;
+    color: #78350f;
+    margin: 2rem 0 !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   }
 </style>
