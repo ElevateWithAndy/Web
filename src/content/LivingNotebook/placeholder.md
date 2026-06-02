@@ -1,15 +1,15 @@
 ---
-title: "Understanding Pelvic Alignment in Ballet and Pilates"
-description: "A close look at finding your neutral pelvis framework to safely scale deep core load."
+title: "Placeholder Notebook Entry"
+description: "This will eventually hold notebook entrys."
 pubDate: 2026-05-31
 tags: ["pilates", "ballet", "alignment"]
 ---
 
-Achieving structural stability requires us to constantly assess pelvis placement...
+placeholder 1
 
-### Finding Neutral
-When working on your functional movement patterns, check your hip points.
+### Title 1
+Description
 
-* Maintain length in the lumbar spine.
-* Keep the ribs integrated and flat.
-* Avoid clamping the gluteal base.
+* List Item 
+* List Item 
+* List Item 
