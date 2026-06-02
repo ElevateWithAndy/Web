@@ -2,39 +2,39 @@
   {
     "category": "Functional Movement Props",
     "items": [
-      { "name": "Franklin Method Ball Set", "desc": "Textured alignment balls specifically designed for deep myofascial release, improving proprioceptive bone feedback, and melting away pelvic and foot tension.", "link": "B002YQRF1A" },
-      { "name": "Franklin Method Fascia Roll", "desc": "A specialized, contoured roller engineered to comfortably cradle the limbs and spine, offering deep localized myofascial decompression and shoulder-rolling support.", "link": "B00N26TZSW" },
-      { "name": "Franklin Method Bands", "desc": "Premium, highly flexible resistance bands configured for dynamic alignment training, localized force redirection, and direct neuromuscular mapping feedback.", "link": "B00FXTW2UY" },
-      { "name": "TriggerPoint Grid Foam Roller", "desc": "Features a multi-density exterior grid pattern over a rigid hollow core to simulate a massage therapist's hands, safely expanding thoracic spine mobility.", "link": "B0040EGNIU" },
-      { "name": "Balanced Body Pilates Ring", "desc": "An ultra-durable 15-inch Ultra-Fit Circle fitted with dual-sided molded padding to safely map, track, and regulate inner/outer leg alignment and core connection.", "link": "https://amzn.to/4a4rU7O" },
-      { "name": "Balanced Body Balance Pad", "desc": "A stable yet reactive high-density foam block canvas designed to challenge deep ankle stabilization, multi-planar balance networks, and deep pelvic control.", "link": "B002YQY1SK" },
-      { "name": "Balanced Body Pilates Arc", "desc": "An ergonomic three-in-one step barrel and spine corrector designed to unpack thoracic stiffness, assist lateral flexions, and cleanly scale lower abdominal engagement.", "link": "B002XVSNRG" },
-      { "name": "Balanced Body Pilates Mat", "desc": "An extra-thick, dense structural fitness mat engineered with premium cushioning to protect your spine base and joint pivots throughout complex rolling movement series.", "link": "B009V29BQW" },
-      { "name": "Balanced Body Magic Roller", "desc": "A highly resilient, full-length cylindrical roller built for fine balance tracking, deep postural correction, and supporting long-term structural core stability routines.", "link": "B0D1V17XJF" },
-      { "name": "Balanced Body Pilates Moon Box", "desc": "A rigid, upholstered wooden step block used to elevate the hips, stabilize seating postures, and correctly adjust height lines during advanced apparatus or mat setups.", "link": "B00LONXKUO" },
-      { "name": "PhysicalMind Institute Parasetter", "desc": "A specialized spinal alignment cradle built with dual-channel physical reliefs to eliminate vertical rib flaring and calm overactive paraspinal muscle tension.", "link": "B07MVMB34K" }
+      { "link": "https://amzn.to/49CIJqq", "name": "Franklin Method Ball Set", "desc": "Textured alignment balls specifically designed for deep myofascial release, improving proprioceptive bone feedback, and melting away pelvic and foot tension." },
+      { "link": "https://amzn.to/4uL71a0", "name": "Franklin Method Fascia Roll", "desc": "A specialized, contoured roller engineered to comfortably cradle the limbs and spine, offering deep localized myofascial decompression and shoulder-rolling support." },
+      { "link": "https://amzn.to/3RJsgdR", "name": "Franklin Method Bands", "desc": "Premium, highly flexible resistance bands configured for dynamic alignment training, localized force redirection, and direct neuromuscular mapping feedback." },
+      { "link": "https://amzn.to/4nYLGY8", "name": "TriggerPoint Grid Foam Roller", "desc": "Features a multi-density exterior grid pattern over a rigid hollow core to simulate a massage therapist's hands, safely expanding thoracic spine mobility." },
+      { "link": "https://amzn.to/4a4rU7O", "name": "Balanced Body Pilates Ring", "desc": "An ultra-durable 15-inch Ultra-Fit Circle fitted with dual-sided molded padding to safely map, track, and regulate inner/outer leg alignment and core connection." },
+      { "link": "https://amzn.to/4dKbLa5", "name": "Balanced Body Balance Pad", "desc": "A stable yet reactive high-density foam block canvas designed to challenge deep ankle stabilization, multi-planar balance networks, and deep pelvic control." },
+      { "link": "https://amzn.to/4fq2nK1", "name": "Balanced Body Pilates Arc", "desc": "An ergonomic three-in-one step barrel and spine corrector designed to unpack thoracic stiffness, assist lateral flexions, and cleanly scale lower abdominal engagement." },
+      { "link": "https://amzn.to/4apwcXx", "name": "Balanced Body Pilates Mat", "desc": "An extra-thick, dense structural fitness mat engineered with premium cushioning to protect your spine base and joint pivots throughout complex rolling movement series." },
+      { "link": "https://amzn.to/4vhVbUM", "name": "Balanced Body Magic Roller", "desc": "A highly resilient, full-length cylindrical roller built for fine balance tracking, deep postural correction, and supporting long-term structural core stability routines." },
+      { "link": "https://amzn.to/4apwj5p", "name": "Balanced Body Pilates Moon Box", "desc": "A rigid, upholstered wooden step block used to elevate the hips, stabilize seating postures, and correctly adjust height lines during advanced apparatus or mat setups." },
+      { "link": "https://amzn.to/3QbvNRI", "name": "PhysicalMind Institute Parasetter", "desc": "A specialized spinal alignment cradle built with dual-channel physical reliefs to eliminate vertical rib flaring and calm overactive paraspinal muscle tension." }
     ]
   },
   {
     "category": "Staying Organized on the Go",
     "items": [
-      { "name": "Travel Item Placeholder 1", "desc": "Replace this text with your custom travel recommendation overview. Describe how it keeps you balanced or organized on the go.", "link": "B00REPLACE1" },
-      { "name": "Travel Item Placeholder 2", "desc": "Replace this text with your next favorite travel pack or tool configuration.", "link": "B00REPLACE2" }
+      { "link": "B00REPLACE1", "name": "Travel Item Placeholder 1", "desc": "Replace this text with your custom travel recommendation overview. Describe how it keeps you balanced or organized on the go." },
+      { "link": "B00REPLACE2", "name": "Travel Item Placeholder 2", "desc": "Replace this text with your next favorite travel pack or tool configuration." }
     ]
   },
   {
     "category": "D&D Essentials",
     "items": [
-      { "name": "Melee Mats Map Starter", "desc": "", "link": "B087YGCH31" },
-      { "name": "Melee Mats Map Starter", "desc": ".", "link": "B076HCL2VC" },
-      { "name": "Heroes of the Borderland Starter Set", "desc": "A great way to get my young nephews involved and started in the world of Dungeons & Dragons.", "link": "B0FDJFR245" }
+      { "link": "https://amzn.to/49C3xy9", "name": "Melee Mats Map Starter", "desc": "" },
+      { "link": "https://amzn.to/4dYk9Bs", "name": "Melee Mats Map Starter", "desc": "." },
+      { "link": "https://amzn.to/4dRUPgw", "name": "Heroes of the Borderland Starter Set", "desc": "A great way to get my young nephews involved and started in the world of Dungeons & Dragons." }
     ]
   },
   {
     "category": "Sharing Essentials",
     "items": [
-      { "name": "Hollyland Lark M2", "desc": "Replace", "link": "B0CP7QXWPN" },
-      { "name": "Neewer Phone Tripod", "desc": "Replace", "link": "B0C9V2FQM9" }
+      { "link": "https://amzn.to/4xa4NTt", "name": "Hollyland Lark M2", "desc": "Replace" },
+      { "link": "https://amzn.to/4vhVoaw", "name": "Neewer Phone Tripod", "desc": "Replace" }
     ]
   }
 ]

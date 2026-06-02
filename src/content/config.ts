@@ -17,9 +17,9 @@ const gear = defineCollection({
       category: z.string(),
       items: z.array(
         z.object({
+          link: z.string(),
           name: z.string(),
           desc: z.string(),
-          link: z.string(),
         })
       ),
     })
