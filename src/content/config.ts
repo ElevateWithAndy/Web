@@ -19,7 +19,7 @@ const gear = defineCollection({
         z.object({
           name: z.string(),
           desc: z.string(),
-          asin: z.string(),
+          link: z.string(),
         })
       ),
     })
