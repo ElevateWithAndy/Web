@@ -2,7 +2,7 @@
 title: "Placeholder Notebook Entry"
 description: "This will eventually hold notebook entrys."
 pubDate: 2026-06-01
-tags: ["dnd", "RolePlaying"]
+tags: ["dnd"]
 layoutType: 'dnd'
 ---
 
