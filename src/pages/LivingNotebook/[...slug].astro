@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+// 🌟 LOCKED IN: Explicitly targets your active 'LivingNotebook' collection database key
 export async function getStaticPaths() {
   const posts = await getCollection('LivingNotebook') || [];
   return posts.map((post) => ({
@@ -13,26 +14,28 @@ export async function getStaticPaths() {
 const post = Astro.props;
 const { Content } = await post.render();
 
-// 🌟 UPDATED: Defaults cleanly to 'elevate' layout parameters if missing in frontmatter
 const layoutType = post.data.layoutType || 'elevate';
 
-// 🌟 UPDATED: Renamed variable array block to elevateStyles to match your target brand
+// ELEVATE THEME: Premium, clean minimalist editorial design
 const elevateStyles = `
-  [&_h2]:text-base [&_h2]:font-normal [&_h2]:uppercase [&_h2]:tracking-wider [&_h2]:text-[#1e1b21] [&_h2]:pt-6
-  [&_h3]:text-sm [&_h3]:font-medium [&_h3]:text-[#7a7480] [&_h3]:pt-4
-  [&_p]:leading-relaxed [&_p]:text-neutral-700
-  [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-2 [&_ul]:text-neutral-600
-  [&_blockquote]:border-l-2 [&_blockquote]:border-[#7a7480] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-[#7a7480] [&_blockquote]:my-6
+  prose prose-neutral max-w-none font-sans text-sm text-[#1e1b21] leading-relaxed
+  prose-headings:uppercase prose-headings:tracking-wider prose-headings:font-light prose-headings:text-[#1e1b21]
+  prose-h2:text-base prose-h2:pt-4
+  prose-h3:text-sm prose-h3:text-[#7a7480]
+  prose-p:text-neutral-700 prose-p:font-light
+  prose-blockquote:border-l-2 prose-blockquote:border-[#7a7480] prose-blockquote:text-[#7a7480] prose-blockquote:font-light prose-blockquote:italic
+  prose-ul:list-disc
 `;
 
+// D&D THEME: Fantasy novel formatting with active borders and custom list shapes
 const dndStyles = `
-  font-serif
-  [&_h2]:text-xl [&_h2]:font-bold [&_h2]:font-serif [&_h2]:text-amber-900 [&_h2]:border-b [&_h2]:border-amber-100 [&_h2]:pb-1 [&_h2]:pt-8
-  [&_h3]:text-base [&_h3]:font-semibold [&_h3]:text-amber-800 [&_h3]:pt-4
-  [&_p]:leading-relaxed [&_p]:text-neutral-800 [&_p]:tracking-wide
-  [&_ul]:list-square [&_ul]:pl-5 [&_ul]:space-y-2 [&_ul]:text-neutral-700
-  [&_strong]:font-bold [&_strong]:text-amber-900
-  [&_blockquote]:bg-amber-50/50 [&_blockquote]:border-l-4 [&_blockquote]:border-amber-600 [&_blockquote]:p-4 [&_blockquote]:rounded-r [&_blockquote]:italic [&_blockquote]:text-amber-900 [&_blockquote]:my-6
+  prose prose-stone max-w-none font-serif text-base text-neutral-900 leading-relaxed
+  prose-headings:font-serif prose-headings:text-amber-900 prose-headings:font-bold
+  prose-h2:text-xl prose-h2:border-b prose-h2:border-amber-200 prose-h2:pb-1 prose-h2:pt-6
+  prose-h3:text-base prose-h3:text-amber-800
+  prose-p:text-neutral-800
+  prose-blockquote:bg-amber-50/50 prose-blockquote:border-l-4 prose-blockquote:border-amber-600 prose-blockquote:p-4 prose-blockquote:rounded-r prose-blockquote:italic prose-blockquote:text-amber-900
+  prose-ul:list-inside
 `;
 ---
 
@@ -47,7 +50,7 @@ const dndStyles = `
       </a>
     </nav>
     
-    <article class={layoutType === 'dnd' ? 'font-serif' : 'font-sans'}>
+    <article>
       <header class="mb-12 pb-8 border-b border-neutral-100">
         <time class="text-xs text-[#7a7480] tracking-widest font-medium uppercase block mb-3">
           {post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}
@@ -60,10 +63,17 @@ const dndStyles = `
         )}
       </header>
 
-      <!-- 🌟 UPDATED: Dynamic matrix container flags elevateStyles wrapper rules natively -->
-      <div class={`text-sm text-[#1e1b21] space-y-6 ${layoutType === 'dnd' ? dndStyles : elevateStyles}`}>
+      <!-- Dynamic typography container using our verified style classes -->
+      <div class={layoutType === 'dnd' ? dndStyles : elevateStyles}>
         <Content />
       </div>
     </article>
   </main>
 </BaseLayout>
+
+<style is:global>
+  /* Specifically forces list elements inside D&D pages to stay square */
+  .prose-stone ul {
+    list-style-type: square !important;
+  }
+</style>
