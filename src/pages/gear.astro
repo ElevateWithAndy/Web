@@ -48,14 +48,20 @@ const gearCategories = gearDataEntry ? gearDataEntry.data : [];
                     <p class="text-xs text-[#7a7480] mt-2 leading-relaxed font-light line-clamp-3">{item.desc}</p>
                   </div>
                   <div class="mt-6">
-                    <a 
-                      href=${item.link}
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      class="inline-block w-full text-center text-xs font-semibold tracking-wider uppercase bg-[#1e1b21] hover:bg-[#7a7480] text-white py-3 px-4 rounded transition-colors"
-                    >
-                      View on Amazon
-                    </a>
+                    {item.link && item.link.startsWith('http') ? (
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-block w-full text-center text-xs font-semibold tracking-wider uppercase bg-[#1e1b21] hover:bg-[#7a7480] text-white py-3 px-4 rounded transition-colors"
+                      >
+                        View on Amazon
+                      </a>
+                    ) : (
+                      <div class="inline-block w-full text-center text-xs font-semibold tracking-wider uppercase bg-neutral-100 text-neutral-500 py-3 px-4 rounded">
+                        Link unavailable
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
