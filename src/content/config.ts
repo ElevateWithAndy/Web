@@ -8,6 +8,7 @@ const livingNotebookCollection = defineCollection({
     // Converts date strings safely into JavaScript Date objects
     pubDate: z.coerce.date(), 
     tags: z.array(z.string()).optional(),
+    layoutType: z.enum(['elevate', 'dnd']).optional().default('elevate'),
   }),
 });
 const gear = defineCollection({
