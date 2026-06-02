@@ -1,7 +1,7 @@
 ---
 title: "Placeholder Notebook Entry"
 description: "This will eventually hold notebook entrys."
-pubDate: 2026-05-31
+pubDate: 2026-06-01
 tags: ["dnd", "RolePlaying"]
 layoutType: 'dnd'
 ---
@@ -9,7 +9,7 @@ layoutType: 'dnd'
 placeholder 1
 
 ### Title 1
-Description
+Description DND
 
 * List Item 
 * List Item 
