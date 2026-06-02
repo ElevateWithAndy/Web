@@ -2,24 +2,24 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Fetch the entries strictly using your content database key mapping parameters
-const rawPosts = await getCollection('blog') || [];
+// Fetch the entries safely using your updated collection key matching parameters
+const rawPosts = await getCollection('LivingNotebook') || [];
 const posts = rawPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// Dynamic Tag Extractor: Automatically builds a list of unique tags used across all posts
+// Dynamic Tag Extractor: Gathers a list of all unique tags across your notebook entries
 const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))].sort();
 ---
 
-<BaseLayout title="A Living Notebook | Elevate With Andy">
+<BaseLayout title="Living Notebook | Elevate With Andy">
   <main class="max-w-3xl mx-auto px-6 py-16">
     <div class="mb-12">
-      <h1 class="text-3xl font-light tracking-wide text-[#1e1b21] uppercase">A Living Notebook</h1>
-      <p class="text-sm text-[#7a7480] mt-2 font-light">Evolving thoughts on somatic inquiry, movement patterns, and campaign logs.</p>
+      <h1 class="text-3xl font-light tracking-wide text-[#1e1b21] uppercase">The Living Notebook</h1>
+      <p class="text-sm text-[#7a7480] mt-2 font-light">Insights on movement, anatomy, and stability practice.</p>
     </div>
 
-    <!-- Minimalist Tag Filter Menu Bar -->
+    <!-- 🌟 Minimalist Tag Filter Menu Bar -->
     {allTags.length > 0 && (
       <div class="mb-12 flex flex-wrap gap-2 items-center text-xs tracking-wider uppercase border-b border-neutral-100 pb-6">
         <span class="text-[#7a7480] font-medium mr-2">Filter by:</span>
@@ -43,6 +43,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))].sort()
     <!-- Dynamic Post Matrix List -->
     <div class="space-y-12" id="notebook-posts">
       {posts.map(post => {
+        // Formats tags into a clean dataset attribute string for the browser filter logic
         const postTagsData = (post.data.tags || []).join(',');
         
         return (
@@ -59,7 +60,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))].sort()
                 })}
               </time>
               
-              <!-- Inline tag indicators inside cards -->
+              <!-- Clean inline tag hashtags on cards -->
               {post.data.tags && post.data.tags.map(tag => (
                 <span class="text-[10px] bg-neutral-50 px-2 py-0.5 rounded text-[#7a7480]/80 lowercase">#{tag}</span>
               ))}
@@ -74,9 +75,8 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))].sort()
             </p>
             
             <div class="mt-4">
-              <!-- 🌟 FIXED: Links strictly route using your /LivingNotebook prefix -->
               <a href={`/LivingNotebook/${post.slug}/`} class="text-xs font-semibold tracking-wider uppercase text-[#1e1b21] hover:underline">
-                Open Entry →
+                Read Entry →
               </a>
             </div>
           </article>
@@ -86,7 +86,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))].sort()
   </main>
 </BaseLayout>
 
-<!-- Vanilla Client Script to Manage Animated Layout Filtering -->
+<!-- 🌟 Vanilla Script to Filter Cards Instantly Without Page Reloads -->
 <script>
   function setupTagFilter() {
     const buttons = document.querySelectorAll('.tag-button');
@@ -96,6 +96,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))].sort()
       btn.addEventListener('click', () => {
         const targetFilter = btn.getAttribute('data-filter');
 
+        // Toggle active button visual states
         buttons.forEach(b => {
           b.classList.remove('bg-[#1e1b21]', 'text-white', 'font-medium', 'border-transparent');
           b.classList.add('bg-[#fcfbfc]', 'text-[#7a7480]', 'border-neutral-200/60', 'font-light');
@@ -103,6 +104,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))].sort()
         btn.classList.remove('bg-[#fcfbfc]', 'text-[#7a7480]', 'border-neutral-200/60', 'font-light');
         btn.classList.add('bg-[#1e1b21]', 'text-white', 'font-medium', 'border-transparent');
 
+        // Show/Hide matching articles based on selected data tags
         articles.forEach(article => {
           const rawTags = article.getAttribute('data-tags') || '';
           const postTagsList = rawTags.split(',');
@@ -119,6 +121,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))].sort()
     });
   }
 
+  // Bind interaction logic on original initialization and router swaps
   setupTagFilter();
   document.addEventListener('astro:after-swap', setupTagFilter);
 </script>
