@@ -2,48 +2,123 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Fetch the entries safely with fallback array tracking
-const rawPosts = await getCollection('LivingNotebook') || [];
+// Fetch the entries strictly using your content database key mapping parameters
+const rawPosts = await getCollection('blog') || [];
 const posts = rawPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+
+// Dynamic Tag Extractor: Automatically builds a list of unique tags used across all posts
+const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))].sort();
 ---
 
-<BaseLayout title="Living Notebook | Elevate With Andy">
+<BaseLayout title="A Living Notebook | Elevate With Andy">
   <main class="max-w-3xl mx-auto px-6 py-16">
-    <div class="mb-16">
-      <h1 class="text-3xl font-light tracking-wide text-[#1e1b21] uppercase">The Living Notebook</h1>
-      <p class="text-sm text-[#7a7480] mt-2 font-light">Insights on movement, anatomy, and stability practice.</p>
+    <div class="mb-12">
+      <h1 class="text-3xl font-light tracking-wide text-[#1e1b21] uppercase">A Living Notebook</h1>
+      <p class="text-sm text-[#7a7480] mt-2 font-light">Evolving thoughts on somatic inquiry, movement patterns, and campaign logs.</p>
     </div>
 
-    <div class="space-y-12">
-      {posts.map(post => (
-        <article class="group border-b border-neutral-100 pb-10 last:border-0">
-          <div class="flex items-center gap-4 text-xs text-[#7a7480]">
-            <time datetime={post.data.pubDate.toISOString()}>
-              {post.data.pubDate.toLocaleDateString('en-us', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </time>
-          </div>
-          
-          <h2 class="text-xl font-normal text-[#1e1b21] mt-3 group-hover:text-[#7a7480] transition-colors">
-            <a href={`/LivingNotebook/${post.slug}/`}>{post.data.title}</a>
-          </h2>
-          
-          <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed max-w-2xl">
-            {post.data.description}
-          </p>
-          
-          <div class="mt-4">
-            <a href={`/LivingNotebook/${post.slug}/`} class="text-xs font-semibold tracking-wider uppercase text-[#1e1b21] hover:underline">
-              Read Entry →
-            </a>
-          </div>
-        </article>
-      ))}
+    <!-- Minimalist Tag Filter Menu Bar -->
+    {allTags.length > 0 && (
+      <div class="mb-12 flex flex-wrap gap-2 items-center text-xs tracking-wider uppercase border-b border-neutral-100 pb-6">
+        <span class="text-[#7a7480] font-medium mr-2">Filter by:</span>
+        <button 
+          data-filter="all" 
+          class="tag-button px-3 py-1.5 rounded bg-[#1e1b21] text-white font-medium border border-transparent transition-all cursor-pointer"
+        >
+          All Entries
+        </button>
+        {allTags.map(tag => (
+          <button 
+            data-filter={tag} 
+            class="tag-button px-3 py-1.5 rounded bg-[#fcfbfc] text-[#7a7480] border border-neutral-200/60 font-light hover:border-[#7a7480]/40 hover:text-[#1e1b21] transition-all cursor-pointer"
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+    )}
+
+    <!-- Dynamic Post Matrix List -->
+    <div class="space-y-12" id="notebook-posts">
+      {posts.map(post => {
+        const postTagsData = (post.data.tags || []).join(',');
+        
+        return (
+          <article 
+            data-tags={postTagsData} 
+            class="notebook-card group border-b border-neutral-100 pb-10 last:border-0 transition-all duration-300"
+          >
+            <div class="flex items-center gap-4 text-xs text-[#7a7480]">
+              <time datetime={post.data.pubDate.toISOString()}>
+                {post.data.pubDate.toLocaleDateString('en-us', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+              
+              <!-- Inline tag indicators inside cards -->
+              {post.data.tags && post.data.tags.map(tag => (
+                <span class="text-[10px] bg-neutral-50 px-2 py-0.5 rounded text-[#7a7480]/80 lowercase">#{tag}</span>
+              ))}
+            </div>
+            
+            <h2 class="text-xl font-normal text-[#1e1b21] mt-3 group-hover:text-[#7a7480] transition-colors">
+              <a href={`/LivingNotebook/${post.slug}/`}>{post.data.title}</a>
+            </h2>
+            
+            <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed max-w-2xl">
+              {post.data.description}
+            </p>
+            
+            <div class="mt-4">
+              <!-- 🌟 FIXED: Links strictly route using your /LivingNotebook prefix -->
+              <a href={`/LivingNotebook/${post.slug}/`} class="text-xs font-semibold tracking-wider uppercase text-[#1e1b21] hover:underline">
+                Open Entry →
+              </a>
+            </div>
+          </article>
+        )
+      })}
     </div>
   </main>
 </BaseLayout>
+
+<!-- Vanilla Client Script to Manage Animated Layout Filtering -->
+<script>
+  function setupTagFilter() {
+    const buttons = document.querySelectorAll('.tag-button');
+    const articles = document.querySelectorAll('.notebook-card');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetFilter = btn.getAttribute('data-filter');
+
+        buttons.forEach(b => {
+          b.classList.remove('bg-[#1e1b21]', 'text-white', 'font-medium', 'border-transparent');
+          b.classList.add('bg-[#fcfbfc]', 'text-[#7a7480]', 'border-neutral-200/60', 'font-light');
+        });
+        btn.classList.remove('bg-[#fcfbfc]', 'text-[#7a7480]', 'border-neutral-200/60', 'font-light');
+        btn.classList.add('bg-[#1e1b21]', 'text-white', 'font-medium', 'border-transparent');
+
+        articles.forEach(article => {
+          const rawTags = article.getAttribute('data-tags') || '';
+          const postTagsList = rawTags.split(',');
+
+          if (targetFilter === 'all' || postTagsList.includes(targetFilter)) {
+            (article as HTMLElement).style.display = 'block';
+            setTimeout(() => { (article as HTMLElement).style.opacity = '1'; }, 10);
+          } else {
+            (article as HTMLElement).style.opacity = '0';
+            (article as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  setupTagFilter();
+  document.addEventListener('astro:after-swap', setupTagFilter);
+</script>
