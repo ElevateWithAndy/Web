@@ -20,6 +20,7 @@ const gear = defineCollection({
           link: z.string(),
           name: z.string(),
           desc: z.string(),
+          img: z.string(),
         })
       ),
     })
