@@ -14,34 +14,12 @@ const post = Astro.props;
 const { Content } = await post.render();
 
 const layoutType = post.data.layoutType || 'elevate';
-
-// 🌟 ELEVATE THEME: Pure inline style tokens for your clean editorial brand
-const elevateStyles = `
-  max-w-none text-sm text-[#1e1b21] font-light leading-relaxed space-y-6 font-sans
-  [&_h2]:text-base [&_h2]:font-normal [&_h2]:uppercase [&_h2]:tracking-wider [&_h2]:text-[#1e1b21] [&_h2]:pt-6 [&_h2]:block
-  [&_h3]:text-sm [&_h3]:font-medium [&_h3]:text-[#7a7480] [&_h3]:pt-4 [&_h3]:block
-  [&_p]:leading-relaxed [&_p]:text-neutral-700 [&_p]:block
-  [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-2 [&_ul]:text-neutral-600 [&_ul]:block
-  [&_blockquote]:border-l-2 [&_blockquote]:border-[#7a7480] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-[#7a7480] [&_blockquote]:my-6 [&_blockquote]:block
-`;
-
-// 🌟 D&D THEME: Absolute hardcoded colors, borders, and parchment background blocks
-const dndStyles = `
-  max-w-none text-base text-[#1c1917] leading-relaxed space-y-6 font-serif
-  [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#78350f] [&_h2]:border-b [&_h2]:border-[#b45309]/30 [&_h2]:pb-2 [&_h2]:pt-8 [&_h2]:block
-  [&_h3]:text-base [&_h3]:font-semibold [&_h3]:text-[#92400e] [&_h3]:pt-4 [&_h3]:block
-  [&_p]:leading-relaxed [&_p]:text-neutral-800 [&_p]:block
-  [&_ul]:list-square [&_ul]:pl-5 [&_ul]:space-y-2 [&_ul]:text-neutral-700 [&_ul]:block
-  [&_strong]:font-bold [&_strong]:text-[#78350f]
-  [&_blockquote]:bg-[#fffbeb] [&_blockquote]:border-l-4 [&_blockquote]:border-[#b45309] [&_blockquote]:p-5 [&_blockquote]:rounded-r [&_blockquote]:italic [&_blockquote]:text-[#78350f] [&_blockquote]:my-6 [&_blockquote]:block [&_blockquote]:shadow-sm
-`;
 ---
 
 <BaseLayout title={`${post.data.title} | Elevate With Andy`}>
-  <!-- Main layout background matches your universal canvas -->
   <main class="max-w-2xl mx-auto px-6 py-20 bg-[#fcfbfc]">
     
-    <!-- Minimalist Navigation Layer -->
+    <!-- Navigation Layer -->
     <nav class="mb-16">
       <a href="/LivingNotebook" class="text-xs font-semibold tracking-widest uppercase text-[#7a7480] hover:text-[#1e1b21] inline-flex items-center gap-2 transition-colors group">
         <span class="text-sm transform group-hover:-translate-x-1 transition-transform">←</span> 
@@ -49,13 +27,13 @@ const dndStyles = `
       </a>
     </nav>
     
-    <article>
-      <!-- Post Meta Header Details -->
+    <!-- The outer class locks in the design template dynamically -->
+    <article class={`notebook-container layout-${layoutType}`}>
       <header class="mb-12 pb-8 border-b border-neutral-100">
         <time class="text-xs text-[#7a7480] tracking-widest font-medium uppercase block mb-3">
           {post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}
         </time>
-        <h1 class={`text-3xl font-light leading-snug uppercase tracking-wide max-w-xl ${layoutType === 'dnd' ? 'text-[#78350f] font-serif' : 'text-[#1e1b21] font-sans'}`}>
+        <h1 class="entry-title text-3xl font-light leading-snug uppercase tracking-wide max-w-xl">
           {post.data.title}
         </h1>
         {post.data.description && (
@@ -63,17 +41,111 @@ const dndStyles = `
         )}
       </header>
 
-      <!-- 🌟 The Direct Inline Target: Forces layout styles directly into the child Markdown nodes -->
-      <div class={layoutType === 'dnd' ? dndStyles : elevateStyles}>
+      <!-- The dynamic markdown HTML renders inside this target block -->
+      <div class="markdown-body">
         <Content />
       </div>
     </article>
   </main>
 </BaseLayout>
 
+<!-- 🌟 NATIVE CSS ENGINE: Bypasses Tailwind completely to guarantee rendering -->
 <style is:global>
-  /* Specifically anchors your square lists for D&D styles safely */
-  .font-serif ul {
+  /* Base Markdown Spacing Rules */
+  .markdown-body p {
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+  }
+  .markdown-body ul, .markdown-body ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+  .markdown-body li {
+    margin-bottom: 0.5rem;
+  }
+
+  /* ==========================================================================
+     1. ELEVATE BASE THEME (Minimalist Editorial Styling)
+     ========================================================================== */
+  .layout-elevate {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+  .layout-elevate .entry-title {
+    color: #1e1b21;
+  }
+  .layout-elevate .markdown-body {
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: #262626;
+  }
+  .layout-elevate .markdown-body h2 {
+    font-size: 1rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #1e1b21;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .layout-elevate .markdown-body ul {
+    list-style-type: disc;
+  }
+  .layout-elevate .markdown-body blockquote {
+    border-left: 2px solid #7a7480;
+    padding-left: 1rem;
+    font-style: italic;
+    color: #7a7480;
+    margin: 1.5rem 0;
+  }
+
+  /* ==========================================================================
+     2. D&D CAMPAIGN THEME (Book-Style Fantasy Styling)
+     ========================================================================== */
+  .layout-dnd {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+  .layout-dnd .entry-title {
+    color: #78350f !important; /* Rich amber title color */
+  }
+  .layout-dnd .markdown-body {
+    font-size: 1rem;
+    color: #1c1917;
+  }
+  /* 🌟 FORCED BORDERS & COLORS: Draws a clean border directly beneath headers */
+  .layout-dnd .markdown-body h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #78350f !important;
+    border-bottom: 1px solid #b45309 !important; /* Solid rust-amber border line */
+    padding-bottom: 0.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .layout-dnd .markdown-body h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #92400e !important;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  /* 🌟 FORCED SQUARE BULLETS */
+  .layout-dnd .markdown-body ul {
     list-style-type: square !important;
+  }
+  .layout-dnd .markdown-body strong {
+    font-weight: 700;
+    color: #78350f !important;
+  }
+  /* 🌟 FORCED SHADING BOX: Wraps quotes in a clean background parchment container */
+  .layout-dnd .markdown-body blockquote {
+    background-color: #fffbeb !important; /* Soft parchment shading box background */
+    border-left: 4px solid #b45309 !important; /* Solid rust-amber vertical sidebar */
+    padding: 1.25rem !important;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    font-style: italic;
+    color: #78350f !important;
+    margin: 2rem 0 !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   }
 </style>
