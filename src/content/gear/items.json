@@ -16,13 +16,6 @@
     ]
   },
   {
-    "category": "Staying Organized on the Go",
-    "items": [
-      { "link": "B00REPLACE1", "name": "Travel Item Placeholder 1", "desc": "Replace this text with your custom travel recommendation overview. Describe how it keeps you balanced or organized on the go.", "img": "" },
-      { "link": "B00REPLACE2", "name": "Travel Item Placeholder 2", "desc": "Replace this text with your next favorite travel pack or tool configuration.", "img": "" }
-    ]
-  },
-  {
     "category": "D&D Essentials",
     "items": [
       { "link": "https://amzn.to/49C3xy9", "name": "Melee Mats Map Starter", "desc": "", "img": "" },
