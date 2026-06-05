@@ -13,7 +13,7 @@ let hasImage = false;
 
 try {
   // Try to dynamically import the image file
-  imageComponent = await import(`../../content/gear/images/${item.img}`);
+  imageComponent = await import(`../content/gear/images/${item.img}`);
   hasImage = true;
 } catch (error) {
   // File does not exist; fallback will handle this
