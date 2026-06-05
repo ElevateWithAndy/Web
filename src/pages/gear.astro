@@ -41,19 +41,25 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../content/gear/ima
                 <div class="flex flex-col justify-between bg-white border border-neutral-100 rounded-lg overflow-hidden hover:border-[#7a7480]/20 transition-all shadow-sm group">
                   
                   <!-- Placeholder Box / Image Link -->
-                  <div class="bg-[#fcfbfc] h-48 p-6 flex items-center justify-center border-b border-neutral-50 relative">
-                    <a href={item.link} class="w-full h-full flex items-center justify-center">
-                      {hasImage ? (
-                        /* 3. Invoke the function matching the path map to pass to <Image /> */
+                  <div class="bg-[#fcfbfc] h-48 w-full p-4 flex items-center justify-center border-b border-neutral-50 relative">
+                    {hasImage ? (
+                      <a 
+                        href={item.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="w-full h-full flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300"
+                      >
                         <Image 
                           src={images[imagePath]()} 
                           alt={item.name} 
-                          class="max-h-full max-w-full object-contain"
+                          class="w-full h-full object-contain"
                         />
-                      ) : (
-                        <span class="text-xs tracking-wider text-neutral-400 uppercase font-light">Image Coming Soon</span>
-                      )}
-                    </a>
+                      </a>
+                    ) : (
+                      <a href={item.link} class="w-full h-full flex items-center justify-center">
+                        <span class="text-[11px] tracking-wider text-neutral-400 uppercase font-light">Image Coming Soon</span>
+                      </a>
+                    )}
                   </div>
 
                   <div class="p-6 flex-grow flex flex-col justify-between bg-white">
