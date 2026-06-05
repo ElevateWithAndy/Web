@@ -55,8 +55,8 @@ const finalizedCategories = await Promise.all(
             {cat.items.map(item => (
               <div class="flex flex-col justify-between bg-white border border-neutral-100 rounded-lg overflow-hidden hover:border-[#7a7480]/20 transition-all shadow-sm group">
                 
-                <!-- Fixed Image Box Container -->
-                <div class="bg-[#fcfbfc] h-48 w-full border-b border-neutral-50 relative overflow-hidden">
+                <!-- Fixed Image Box Container (Reduced Height) -->
+                <div class="bg-[#fcfbfc] h-40 w-full border-b border-neutral-50 relative overflow-hidden">
                   {item.finalSrc ? (
                     <a 
                       href={item.link} 
@@ -77,10 +77,11 @@ const finalizedCategories = await Promise.all(
                   )}
                 </div>
 
-                <div class="p-6 flex-grow flex flex-col justify-between bg-white">
+                <!-- Product Details Box (Tightened Top Padding) -->
+                <div class="pt-4 px-6 pb-6 flex-grow flex flex-col justify-between bg-white">
                   <div>
                     <h3 class="font-normal text-base text-[#1e1b21] uppercase tracking-wide leading-snug">{item.name}</h3>
-                    <p class="text-xs text-[#7a7480] mt-2 leading-relaxed font-light line-clamp-3">{item.desc}</p>
+                    <p class="text-xs text-[#7a7480] mt-1 leading-relaxed font-light line-clamp-3">{item.desc}</p>
                   </div>
                   <div class="mt-6">
                     {item.link && item.link.startsWith('http') ? (
