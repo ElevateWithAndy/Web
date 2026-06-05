@@ -2,13 +2,25 @@
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Your active Amazon Tracking ID parameter
-const amazonTag = "elevatewit027-20"; 
-
-// 🌟 FETCH THE DATA SAFELY:
 // Because items.json sits directly inside content/gear, fetch it as a single data document entry
 const gearDataEntry = await getEntry('gear', 'items');
 const gearCategories = gearDataEntry ? gearDataEntry.data : [];
+---
+---
+import { Image } from 'astro:assets';
+
+// Assume 'item' comes from your JSON loop
+let imageComponent;
+let hasImage = false;
+
+try {
+  // Try to dynamically import the image file
+  imageComponent = await import(`../../content/gear/images/${item.img}`);
+  hasImage = true;
+} catch (error) {
+  // File does not exist; fallback will handle this
+  hasImage = false;
+}
 ---
 <BaseLayout title="Recommended Gear | Elevate With Andy">
   <main class="max-w-5xl mx-auto px-6 py-16">
@@ -37,9 +49,13 @@ const gearCategories = gearDataEntry ? gearDataEntry.data : [];
                 
                 <!-- Placeholder Box -->
                 <div class="bg-[#fcfbfc] h-48 p-6 flex items-center justify-center border-b border-neutral-50 relative">
-                  <div class="text-center text-[10px] uppercase font-medium tracking-[0.15em] text-[#7a7480]/60 border border-dashed border-[#7a7480]/20 rounded px-4 py-2 bg-white shadow-2sm">
-                    Image coming soon
-                  </div>
+                  <a href={item.link}>
+                    {hasImage ? (
+                      <Image src={imageComponent.default} alt={item.name} />
+                    ) : (
+                      <span class="coming-soon">Image Coming Soon</span>
+                    )}
+                  </a>
                 </div>
 
                 <div class="p-6 flex-grow flex flex-col justify-between bg-white">
