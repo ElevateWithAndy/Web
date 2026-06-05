@@ -7,18 +7,8 @@ import { Image } from 'astro:assets';
 const gearDataEntry = await getEntry('gear', 'items');
 const gearCategories = gearDataEntry ? gearDataEntry.data : [];
 
-// Assume 'item' comes from your JSON loop
-let imageComponent;
-let hasImage = false;
-
-try {
-  // Try to dynamically import the image file
-  imageComponent = await import(`../content/gear/images/${item.img}`);
-  hasImage = true;
-} catch (error) {
-  // File does not exist; fallback will handle this
-  hasImage = false;
-}
+// 1. Scan your images directory at build time so Vite maps all files properly
+const images = import.meta.glob<{ default: ImageMetadata }>('../content/gear/images/*.{jpeg,jpg,png,webp,JPEG,JPG}');
 ---
 <BaseLayout title="Recommended Gear | Elevate With Andy">
   <main class="max-w-5xl mx-auto px-6 py-16">
@@ -42,44 +32,55 @@ try {
             {cat.category}
           </h2>
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {cat.items.map(item => (
-              <div class="flex flex-col justify-between bg-white border border-neutral-100 rounded-lg overflow-hidden hover:border-[#7a7480]/20 transition-all shadow-sm group">
-                
-                <!-- Placeholder Box -->
-                <div class="bg-[#fcfbfc] h-48 p-6 flex items-center justify-center border-b border-neutral-50 relative">
-                  <a href={item.link}>
-                    {hasImage ? (
-                      <Image src={imageComponent.default} alt={item.name} />
-                    ) : (
-                      <span class="coming-soon">Image Coming Soon</span>
-                    )}
-                  </a>
-                </div>
+            {cat.items.map(item => {
+              // 2. Resolve the image path dynamically inside the item loop
+              const imagePath = `../content/gear/images/${item.img}`;
+              const hasImage = imagePath in images;
 
-                <div class="p-6 flex-grow flex flex-col justify-between bg-white">
-                  <div>
-                    <h3 class="font-normal text-base text-[#1e1b21] uppercase tracking-wide leading-snug">{item.name}</h3>
-                    <p class="text-xs text-[#7a7480] mt-2 leading-relaxed font-light line-clamp-3">{item.desc}</p>
+              return (
+                <div class="flex flex-col justify-between bg-white border border-neutral-100 rounded-lg overflow-hidden hover:border-[#7a7480]/20 transition-all shadow-sm group">
+                  
+                  <!-- Placeholder Box / Image Link -->
+                  <div class="bg-[#fcfbfc] h-48 p-6 flex items-center justify-center border-b border-neutral-50 relative">
+                    <a href={item.link} class="w-full h-full flex items-center justify-center">
+                      {hasImage ? (
+                        /* 3. Invoke the function matching the path map to pass to <Image /> */
+                        <Image 
+                          src={images[imagePath]()} 
+                          alt={item.name} 
+                          class="max-h-full max-w-full object-contain"
+                        />
+                      ) : (
+                        <span class="text-xs tracking-wider text-neutral-400 uppercase font-light">Image Coming Soon</span>
+                      )}
+                    </a>
                   </div>
-                  <div class="mt-6">
-                    {item.link && item.link.startsWith('http') ? (
-                      <a
-                        href={item.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="inline-block w-full text-center text-xs font-semibold tracking-wider uppercase bg-[#1e1b21] hover:bg-[#7a7480] text-white py-3 px-4 rounded transition-colors"
-                      >
-                        View on Amazon
-                      </a>
-                    ) : (
-                      <div class="inline-block w-full text-center text-xs font-semibold tracking-wider uppercase bg-neutral-100 text-neutral-500 py-3 px-4 rounded">
-                        Link unavailable
-                      </div>
-                    )}
+
+                  <div class="p-6 flex-grow flex flex-col justify-between bg-white">
+                    <div>
+                      <h3 class="font-normal text-base text-[#1e1b21] uppercase tracking-wide leading-snug">{item.name}</h3>
+                      <p class="text-xs text-[#7a7480] mt-2 leading-relaxed font-light line-clamp-3">{item.desc}</p>
+                    </div>
+                    <div class="mt-6">
+                      {item.link && item.link.startsWith('http') ? (
+                        <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="inline-block w-full text-center text-xs font-semibold tracking-wider uppercase bg-[#1e1b21] hover:bg-[#7a7480] text-white py-3 px-4 rounded transition-colors"
+                        >
+                          View on Amazon
+                        </a>
+                      ) : (
+                        <div class="inline-block w-full text-center text-xs font-semibold tracking-wider uppercase bg-neutral-100 text-neutral-500 py-3 px-4 rounded">
+                          Link unavailable
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       ))}
