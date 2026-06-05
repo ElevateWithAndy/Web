@@ -1,13 +1,11 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
 
 // Because items.json sits directly inside content/gear, fetch it as a single data document entry
 const gearDataEntry = await getEntry('gear', 'items');
 const gearCategories = gearDataEntry ? gearDataEntry.data : [];
----
----
-import { Image } from 'astro:assets';
 
 // Assume 'item' comes from your JSON loop
 let imageComponent;
