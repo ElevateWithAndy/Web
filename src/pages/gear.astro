@@ -41,24 +41,24 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../content/gear/ima
                 <div class="flex flex-col justify-between bg-white border border-neutral-100 rounded-lg overflow-hidden hover:border-[#7a7480]/20 transition-all shadow-sm group">
                   
                   <!-- Placeholder Box / Image Link -->
-                  <div class="bg-[#fcfbfc] h-48 w-full flex items-center justify-center border-b border-neutral-50 relative overflow-hidden">
+                  <div class="bg-[#fcfbfc] h-48 w-full border-b border-neutral-50 relative overflow-hidden group">
                     {hasImage ? (
                       <a 
                         href={item.link} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        class="w-full h-full flex items-center justify-center p-6 group"
+                        class="w-full h-full flex items-center justify-center p-4"
                       >
                         <Image 
                           src={images[imagePath]()} 
                           alt={item.name} 
                           width={400} 
                           height={300}
-                          class="!w-full !h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                          class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                         />
                       </a>
                     ) : (
-                      <a href={item.link} class="w-full h-full flex items-center justify-center p-6">
+                      <a href={item.link} class="w-full h-full flex items-center justify-center p-4">
                         <span class="text-[11px] tracking-wider text-neutral-400 uppercase font-light">Image Coming Soon</span>
                       </a>
                     )}
