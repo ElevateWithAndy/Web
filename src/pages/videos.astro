@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import playlists from '../content/videos/playlists.json';
 
-// Astro automatically pulls this variable securely from your root .env file
 const API_KEY = String(import.meta.env.YOUTUBE_API_KEY).trim();
 
 const structuredCategories = await Promise.all(
@@ -10,7 +9,6 @@ const structuredCategories = await Promise.all(
     let videos = [];
     
     try {
-      // 🛠️ Call the clean, official Google API endpoint
       const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${pl.id}&key=${API_KEY}`;
       
       const response = await fetch(url);
@@ -23,7 +21,6 @@ const structuredCategories = await Promise.all(
           return {
             title: item.snippet?.title || 'Movement Session',
             youtubeUrl: `https://youtube.com/watch?v=${videoId}&list=${pl.id}`,
-            // Google API provides clean, high-resolution thumbnail options directly
             thumbnail: item.snippet?.thumbnails?.maxres?.url || 
                       item.snippet?.thumbnails?.high?.url || 
                       `https://youtube.com{videoId}/maxresdefault.jpg`
@@ -81,7 +78,6 @@ const structuredCategories = await Promise.all(
           ) : (
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full block">
               {category.videos.map(video => (
-                /* 🛠️ FIX: The anchor tag now wraps the entire card structure */
                 <a 
                   href={video.youtubeUrl} 
                   target="_blank" 
@@ -93,10 +89,10 @@ const structuredCategories = await Promise.all(
                       src={video.thumbnail} 
                       alt={video.title} 
                       loading="lazy"
-                      class="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 transition-all duration-300"
+                      class="w-full h-full object-cover transition-all duration-300 group-hover:scale-[1.02]"
                     />
                   </div>
-                  <h3 class="font-normal text-base text-[#1e1b21] leading-snug line-clamp-2 transition-colors group-hover:text-red-600">
+                  <h3 class="font-normal text-base text-[#1e1b21] leading-snug line-clamp-2 transition-colors group-hover:text-[#7a7480]">
                     {video.title}
                   </h3>
                 </a>
