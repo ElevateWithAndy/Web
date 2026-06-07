@@ -36,7 +36,7 @@ const playlists = [
 const structuredCategories = await Promise.all(
   playlists.map(async (pl) => {
     try {
-      const feed = await parser.parseURL(`https://youtube.com{pl.id}`);
+      const feed = await parser.parseURL(`https://youtube.com/playlist?list={pl.id}`);
       
       const videos = feed.items.map(item => {
         const videoId = item.link ? item.link.split('v=')[1]?.split('&')[0] : '';
