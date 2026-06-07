@@ -26,14 +26,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4.2.2 
+      
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-
       - run: npm install
       - run: npm run build
         env:
-          # 🛠️ This maps your locked GitHub Secret directly to Astro's build engine
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           
       - uses: actions/upload-pages-artifact@v3
