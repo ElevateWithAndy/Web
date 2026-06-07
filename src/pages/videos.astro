@@ -4,7 +4,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const parser = new Parser();
 
-// 1. UPDATE THESE: Replace with your actual YouTube Playlist IDs (the text after list=)
 const playlists = [
   {
     name: "Pilates Cookies | Bite-Sized Resets",
@@ -32,26 +31,29 @@ const playlists = [
   }
 ];
 
-// Fetch and unpack each playlist feed asynchronously
 const structuredCategories = await Promise.all(
   playlists.map(async (pl) => {
     try {
-      // 🛠 FIX 1 & 2: Added $ sign and swapped to the proper YouTube RSS feeds endpoint URL
       const feed = await parser.parseURL(`https://youtube.com{pl.id}`);
       
       const videos = feed.items.map(item => {
-        // 🛠 FIX 3: Parsed the video ID reliably from RSS feeds using item.id (looks like "yt:video:VIDEO_ID")
-        const videoId = item.id ? item.id.replace('yt:video:', '') : '';
-        
+        // Safe check to extract video ID from either standard link or feed ID string
+        let videoId = '';
+        if (item.link) {
+          videoId = item.link.split('v=')[1]?.split('&')[0] || '';
+        } else if (item.id) {
+          videoId = item.id.replace('yt:video:', '');
+        }
+
         return {
           title: item.title || 'Movement Session',
-          youtubeUrl: item.link,
-          // 🛠 FIX 4: Swapped domain to img.youtube.com to make thumbnails load properly
+          youtubeUrl: item.link || `https://youtube.com{videoId}`,
+          // 🛠 FIX: Added the missing $ sign to properly build the image path string
           thumbnail: videoId 
             ? `https://youtube.com{videoId}/maxresdefault.jpg` 
-            : 'https://youtube.com'
+            : 'https://www.youtube.com'
         };
-      }).slice(0, 3); // Limits the page to the 3 most recent videos per playlist
+      }).slice(0, 3);
 
       return { name: pl.name, description: pl.description, videos };
     } catch (e) {
@@ -61,4 +63,3 @@ const structuredCategories = await Promise.all(
   })
 );
 ---
-:walking
