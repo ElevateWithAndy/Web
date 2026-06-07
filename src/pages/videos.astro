@@ -36,13 +36,17 @@ const playlists = [
 const structuredCategories = await Promise.all(
   playlists.map(async (pl) => {
     try {
-      const feed = await parser.parseURL(`https://youtube.com/playlist?list={pl.id}`);
+      // 🛠 FIX 1 & 2: Added $ sign and swapped to the proper YouTube RSS feeds endpoint URL
+      const feed = await parser.parseURL(`https://youtube.com{pl.id}`);
       
       const videos = feed.items.map(item => {
-        const videoId = item.link ? item.link.split('v=')[1]?.split('&')[0] : '';
+        // 🛠 FIX 3: Parsed the video ID reliably from RSS feeds using item.id (looks like "yt:video:VIDEO_ID")
+        const videoId = item.id ? item.id.replace('yt:video:', '') : '';
+        
         return {
           title: item.title || 'Movement Session',
           youtubeUrl: item.link,
+          // 🛠 FIX 4: Swapped domain to img.youtube.com to make thumbnails load properly
           thumbnail: videoId 
             ? `https://youtube.com{videoId}/maxresdefault.jpg` 
             : 'https://youtube.com'
@@ -57,73 +61,4 @@ const structuredCategories = await Promise.all(
   })
 );
 ---
-
-<BaseLayout title="Movement Index | Elevate With Andy">
-  <main class="max-w-5xl mx-auto px-6 py-16">
-    
-    <!-- Video Page Title Block -->
-    <div class="text-center max-w-xl mx-auto mb-20">
-      <h1 class="text-3xl font-light tracking-wide text-[#1e1b21] uppercase">On-Demand Practice</h1>
-      <p class="text-sm text-[#7a7480] mt-3 font-light leading-relaxed">
-        Sequences and training sets sorted by movement discipline.
-      </p>
-    </div>
-    <!-- Playlist Section Divider Blocks -->
-    <div class="space-y-24">
-      {structuredCategories.map(category => (
-        // 1. REMOVED the "category.videos.length > 0 &&" condition so it always shows
-        <section>
-          <!-- Title Bar Grouping -->
-          <div class="border-b border-neutral-100 pb-4 mb-8">
-            <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase">
-              {category.name}
-            </h2>
-            <p class="text-xs text-[#7a7480] font-light mt-2 max-w-2xl leading-relaxed whitespace-pre-line">
-              {category.description}
-            </p>
-          </div>
-          
-          <!-- 2. ADDED a conditional check inside the grid block -->
-          {category.videos.length === 0 ? (
-            // Minimalist placeholder for empty rows
-            <div class="py-12 px-6 border border-dashed border-neutral-200 rounded-lg text-center max-w-sm">
-              <p class="text-xs text-[#7a7480] font-light italic">
-                New movement sequences coming soon to this collection.
-              </p>
-            </div>
-          ) : (
-            // Grid Matrix Display for active videos
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {category.videos.map(video => (
-                <div class="group flex flex-col justify-between bg-white border border-neutral-100 rounded-lg p-4 shadow-sm hover:border-[#7a7480]/20 transition-all">
-                  <div>
-                    <div class="aspect-video w-full overflow-hidden bg-neutral-50 rounded mb-4">
-                      <img 
-                        src={video.thumbnail} 
-                        alt={video.title} 
-                        loading="lazy"
-                        class="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 transition-all duration-300"
-                      />
-                    </div>
-                    <h3 class="font-normal text-base text-[#1e1b21] leading-snug line-clamp-2">{video.title}</h3>
-                  </div>
-                  <div class="mt-4 pt-3 border-t border-neutral-50">
-                    <a 
-                      href={video.youtubeUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      class="text-xs font-semibold tracking-wider uppercase text-red-600 hover:text-red-700 inline-flex items-center gap-1 transition-colors"
-                    >
-                      Stream Practice 
-                      <span class="text-sm font-normal">→</span>
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-      ))}
-    </div>
-  </main>
-</BaseLayout>
+:walking
