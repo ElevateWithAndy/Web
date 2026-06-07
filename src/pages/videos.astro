@@ -2,27 +2,40 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 // Astro automatically pulls this variable securely from your root .env file
-const API_KEY = import.meta.env.YOUTUBE_API_KEY;
+const API_KEY = String(import.meta.env.YOUTUBE_API_KEY).trim();
 const playlists = [
   {
     name: "Pilates Cookies | Bite-Sized Resets",
     id: "PL-jCamkYihtuEjomINLE9siPYAxrijcPg",
-    description: `Enjoy a Pilates Cookie — a bite-sized movement ritual to help you find feel-good ease and be where your feet are...`
+    description: `Enjoy a Pilates Cookie — a bite-sized movement ritual to help you find feel-good ease and be where your feet are.  
+    
+Through mindful movement, we change ourselves from the inside out. By using gravity as our free training tool—and occasionally bringing in small props for immediate feedback—we can quickly restore alignment, clear the mental clutter, and reset our entire state of being in just a few minutes. This is the power of continuously showing up, one bite-sized piece at a time.  
+    
+This is why we elevate.  
+    
+#PilatesCookies #BiteSizedRitual #BeWhereYourFeetAre #MindfulMovement #ElevateWithAndy`
   },
   {
     name: "Shadows & Stars: The Wild Experiment",
     id: "PL-jCamkYihtt3kq88Pfi1-ZlaBi0AOpO2",
-    description: `Welcome to a space where thriving is a wild experiment...`
+    description: `Welcome to a space where thriving is a wild experiment.  
+    
+This playlist explores creative projects and everyday habits that go way beyond just "moving well"—taking practices out of the studio and releasing them into real life. It’s where artistic endeavors and everyday play collide.  
+    
+From deep-diving into D&D characters and digging in the yard, to hanging with furred and feathered friends... it’s all part of the practice.  
+    
+This is where we find our feet in the dark together, walking amongst the shadows to find our stars.  
+    
+#WildExperiment #CreativeWellBeing #EmbodiedLiving #DNDCommunity #ElevateWithAndy`
   }
 ];
-
 const structuredCategories = await Promise.all(
   playlists.map(async (pl) => {
     let videos = [];
     
     try {
       // 🛠️ Call the clean, official Google API endpoint
-      const url = `https://googleapis.com{pl.id}&key=${API_KEY}`;
+      const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=3&playlistId=${pl.id}&key=${API_KEY}`;
       
       const response = await fetch(url);
       
@@ -33,7 +46,7 @@ const structuredCategories = await Promise.all(
           const videoId = item.snippet?.resourceId?.videoId || '';
           return {
             title: item.snippet?.title || 'Movement Session',
-            youtubeUrl: `https://youtube.com{videoId}&list=${pl.id}`,
+            youtubeUrl: `https://youtube.com/watch?v=${videoId}&list=${pl.id}`,
             // Google API provides clean, high-resolution thumbnail options directly
             thumbnail: item.snippet?.thumbnails?.maxres?.url || 
                       item.snippet?.thumbnails?.high?.url || 
@@ -56,43 +69,61 @@ const structuredCategories = await Promise.all(
   })
 );
 ---
-
-<!-- (Your exact HTML template below remains 100% the same) -->
 <BaseLayout title="Movement Index | Elevate With Andy">
   <main class="max-w-5xl mx-auto px-6 py-16 w-full">
+    
+    <!-- Header Title Section -->
     <div class="text-center max-w-xl mx-auto mb-20">
       <h1 class="text-3xl font-light tracking-wide text-[#1e1b21] uppercase">On-Demand Practice</h1>
-      <p class="text-sm text-[#7a7480] mt-3 font-light leading-relaxed">Sequences and training sets sorted by movement discipline.</p>
+      <p class="text-sm text-[#7a7480] mt-3 font-light leading-relaxed">
+        Sequences and training sets sorted by movement discipline.
+      </p>
     </div>
 
+    <!-- Playlist Category Grid Blocks -->
     <div class="space-y-24 w-full block">
       {structuredCategories.map(category => (
         <section class="w-full block clear-both">
+          
+          <!-- Category Headings -->
           <div class="border-b border-neutral-100 pb-4 mb-8 block w-full">
-            <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase">{category.name}</h2>
-            <p class="text-xs text-[#7a7480] font-light mt-2 max-w-2xl leading-relaxed whitespace-pre-line">{category.description}</p>
+            <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase">
+              {category.name}
+            </h2>
+            <p class="text-xs text-[#7a7480] font-light mt-2 max-w-2xl leading-relaxed whitespace-pre-line">
+              {category.description}
+            </p>
           </div>
           
+          <!-- Content Display Control Matrix -->
           {category.videos.length === 0 ? (
             <div class="py-12 px-6 border border-dashed border-neutral-200 rounded-lg max-w-sm block clear-both">
-              <p class="text-xs text-[#7a7480] font-light italic">New movement sequences coming soon to this collection.</p>
+              <p class="text-xs text-[#7a7480] font-light italic">
+                New movement sequences coming soon to this collection.
+              </p>
             </div>
           ) : (
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full block">
               {category.videos.map(video => (
-                <div class="group flex flex-col justify-between bg-white border border-neutral-100 rounded-lg p-4 shadow-sm hover:border-[#7a7480]/20 transition-all">
-                  <div>
-                    <div class="aspect-video w-full overflow-hidden bg-neutral-50 rounded mb-4">
-                      <img src={video.thumbnail} alt={video.title} loading="lazy" class="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 transition-all duration-300" />
-                    </div>
-                    <h3 class="font-normal text-base text-[#1e1b21] leading-snug line-clamp-2">{video.title}</h3>
+                /* 🛠️ FIX: The anchor tag now wraps the entire card structure */
+                <a 
+                  href={video.youtubeUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="group block bg-white border border-neutral-100 rounded-lg p-4 shadow-sm hover:border-[#7a7480]/20 transition-all cursor-pointer"
+                >
+                  <div class="aspect-video w-full overflow-hidden bg-neutral-50 rounded mb-4">
+                    <img 
+                      src={video.thumbnail} 
+                      alt={video.title} 
+                      loading="lazy"
+                      class="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 transition-all duration-300"
+                    />
                   </div>
-                  <div class="mt-4 pt-3 border-t border-neutral-50">
-                    <a href={video.youtubeUrl} target="_blank" rel="noopener noreferrer" class="text-xs font-semibold tracking-wider uppercase text-red-600 hover:text-red-700 inline-flex items-center gap-1 transition-colors">
-                      Stream Practice <span class="text-sm font-normal">→</span>
-                    </a>
-                  </div>
-                </div>
+                  <h3 class="font-normal text-base text-[#1e1b21] leading-snug line-clamp-2 transition-colors group-hover:text-red-600">
+                    {video.title}
+                  </h3>
+                </a>
               ))}
             </div>
           )}
