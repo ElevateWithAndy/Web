@@ -3,7 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import playlists from '../content/videos/playlists.json';
 
 const API_KEY = String(import.meta.env.YOUTUBE_API_KEY).trim();
-
+const response = await fetch(url, {
+  headers: {
+    'Referer': 'https://elevatewithandy.com'
+  }
+});
 const structuredCategories = await Promise.all(
   playlists.map(async (pl) => {
     let videos = [];
