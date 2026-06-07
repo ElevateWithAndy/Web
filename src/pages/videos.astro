@@ -1,14 +1,13 @@
 ---
-import Parser from 'rss-parser';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const parser = new Parser();
-
+// Astro automatically pulls this variable securely from your root .env file
+const API_KEY = import.meta.env.YOUTUBE_API_KEY;
 const playlists = [
   {
     name: "Pilates Cookies | Bite-Sized Resets",
     id: "PL-jCamkYihtuEjomINLE9siPYAxrijcPg",
-    description: `Enjoy a Pilates Cookie — a bite-sized movement ritual...`
+    description: `Enjoy a Pilates Cookie — a bite-sized movement ritual to help you find feel-good ease and be where your feet are...`
   },
   {
     name: "Shadows & Stars: The Wild Experiment",
@@ -17,65 +16,88 @@ const playlists = [
   }
 ];
 
-// Helper function to stop the request if YouTube hangs or stalls
-const fetchWithTimeout = async (url: string, timeout = 4000) => {
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
-  try {
-    const response = await fetch(url, { signal: controller.signal });
-    clearTimeout(id);
-    return response;
-  } catch (err) {
-    clearTimeout(id);
-    throw err;
-  }
-};
-
-// 🛠 FIX 1: Swapped to 'allSettled' so if one playlist fails, the others still build
-const playlistPromises = playlists.map(async (pl) => {
-  try {
-    // 🛠 FIX 2: Added a timeout so a slow YouTube server won't freeze your site build
-    const url = `https://youtube.com{pl.id}`;
-    const response = await fetchWithTimeout(url);
+const structuredCategories = await Promise.all(
+  playlists.map(async (pl) => {
+    let videos = [];
     
-    if (!response.ok) {
-      throw new Error(`YouTube API returned HTTP status ${response.status}`);
+    try {
+      // 🛠️ Call the clean, official Google API endpoint
+      const url = `https://googleapis.com{pl.id}&key=${API_KEY}`;
+      
+      const response = await fetch(url);
+      
+      if (response.ok) {
+        const data = await response.json();
+        
+        videos = (data.items || []).map((item: any) => {
+          const videoId = item.snippet?.resourceId?.videoId || '';
+          return {
+            title: item.snippet?.title || 'Movement Session',
+            youtubeUrl: `https://youtube.com{videoId}&list=${pl.id}`,
+            // Google API provides clean, high-resolution thumbnail options directly
+            thumbnail: item.snippet?.thumbnails?.maxres?.url || 
+                      item.snippet?.thumbnails?.high?.url || 
+                      `https://youtube.com{videoId}/maxresdefault.jpg`
+          };
+        });
+      } else {
+        const errData = await response.json();
+        console.error(`Google API Error for ${pl.name}:`, errData.error?.message);
+      }
+    } catch (e) {
+      console.error(`Network error reaching Google API for ${pl.name}:`, e);
     }
-    
-    const xmlText = await response.text();
-    const feed = await parser.parseString(xmlText);
-    
-    const videos = (feed.items || []).map(item => {
-      const videoId = item.id ? item.id.replace('yt:video:', '') : '';
-      return {
-        title: item.title || 'Movement Session',
-        youtubeUrl: item.link || `https://youtube.com{videoId}`,
-        thumbnail: videoId 
-          ? `https://youtube.com{videoId}/maxresdefault.jpg` 
-          : 'https://youtube.com'
-      };
-    }).slice(0, 3);
 
-    return { name: pl.name, description: pl.description, videos };
-  } catch (e) {
-    // 🛠 FIX 3: Silently log the issue to your console, but gracefully return an empty state
-    console.error(`❌ [YouTube Sync Error] Failed to load "${pl.name}":`, e.message);
-    return { name: pl.name, description: pl.description, videos: [] };
-  }
-});
-
-const results = await Promise.allSettled(playlistPromises);
-
-// 🛠 FIX 4: Unpack the settled elements and guarantee your page always receives an array
-const structuredCategories = results.map((result, index) => {
-  if (result.status === 'fulfilled') {
-    return result.value;
-  }
-  // Ultimate backup fallback if the entire inner block threw an unhandled error
-  return { 
-    name: playlists[index].name, 
-    description: playlists[index].description, 
-    videos: [] 
-  };
-});
+    return {
+      name: pl.name,
+      description: pl.description,
+      videos: videos
+    };
+  })
+);
 ---
+
+<!-- (Your exact HTML template below remains 100% the same) -->
+<BaseLayout title="Movement Index | Elevate With Andy">
+  <main class="max-w-5xl mx-auto px-6 py-16 w-full">
+    <div class="text-center max-w-xl mx-auto mb-20">
+      <h1 class="text-3xl font-light tracking-wide text-[#1e1b21] uppercase">On-Demand Practice</h1>
+      <p class="text-sm text-[#7a7480] mt-3 font-light leading-relaxed">Sequences and training sets sorted by movement discipline.</p>
+    </div>
+
+    <div class="space-y-24 w-full block">
+      {structuredCategories.map(category => (
+        <section class="w-full block clear-both">
+          <div class="border-b border-neutral-100 pb-4 mb-8 block w-full">
+            <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase">{category.name}</h2>
+            <p class="text-xs text-[#7a7480] font-light mt-2 max-w-2xl leading-relaxed whitespace-pre-line">{category.description}</p>
+          </div>
+          
+          {category.videos.length === 0 ? (
+            <div class="py-12 px-6 border border-dashed border-neutral-200 rounded-lg max-w-sm block clear-both">
+              <p class="text-xs text-[#7a7480] font-light italic">New movement sequences coming soon to this collection.</p>
+            </div>
+          ) : (
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full block">
+              {category.videos.map(video => (
+                <div class="group flex flex-col justify-between bg-white border border-neutral-100 rounded-lg p-4 shadow-sm hover:border-[#7a7480]/20 transition-all">
+                  <div>
+                    <div class="aspect-video w-full overflow-hidden bg-neutral-50 rounded mb-4">
+                      <img src={video.thumbnail} alt={video.title} loading="lazy" class="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 transition-all duration-300" />
+                    </div>
+                    <h3 class="font-normal text-base text-[#1e1b21] leading-snug line-clamp-2">{video.title}</h3>
+                  </div>
+                  <div class="mt-4 pt-3 border-t border-neutral-50">
+                    <a href={video.youtubeUrl} target="_blank" rel="noopener noreferrer" class="text-xs font-semibold tracking-wider uppercase text-red-600 hover:text-red-700 inline-flex items-center gap-1 transition-colors">
+                      Stream Practice <span class="text-sm font-normal">→</span>
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      ))}
+    </div>
+  </main>
+</BaseLayout>

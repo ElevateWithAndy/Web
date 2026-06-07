@@ -5,9 +5,10 @@ on:
     branches:
       - main
   schedule:
-    # This automatically triggers a rebuild every morning at 6:00 AM UTC
+    # Runs every 15 minutes (e.g., :03, :18, :33, :48) to bypass top-of-the-hour server delays
     - cron: '3/15 * * * *'
   workflow_dispatch: 
+
 permissions:
   contents: read
   pages: write
@@ -29,7 +30,12 @@ jobs:
         with:
           node-version: '20'
       - run: npm install
+      
       - run: npm run build
+        env:
+          # 🛠️ This maps your locked GitHub Secret directly to Astro's build engine
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          
       - uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
