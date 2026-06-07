@@ -36,19 +36,14 @@ const structuredCategories = await Promise.all(
     try {
       const feed = await parser.parseURL(`https://youtube.com{pl.id}`);
       
-      const videos = feed.items.map(item => {
-        // Safe check to extract video ID from either standard link or feed ID string
-        let videoId = '';
-        if (item.link) {
-          videoId = item.link.split('v=')[1]?.split('&')[0] || '';
-        } else if (item.id) {
-          videoId = item.id.replace('yt:video:', '');
-        }
+      const videos = (feed.items || []).map(item => {
+        // 🛠 FIX: Safely grab the clean video ID string directly from the RSS feed item ID
+        // YouTube RSS IDs look like: "yt:video:VIDEO_ID_HERE"
+        const videoId = item.id ? item.id.replace('yt:video:', '') : '';
 
         return {
           title: item.title || 'Movement Session',
           youtubeUrl: item.link || `https://youtube.com{videoId}`,
-          // 🛠 FIX: Added the missing $ sign to properly build the image path string
           thumbnail: videoId 
             ? `https://youtube.com{videoId}/maxresdefault.jpg` 
             : 'https://www.youtube.com'
