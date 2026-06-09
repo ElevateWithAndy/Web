@@ -3,7 +3,7 @@ import { getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 // Fetch the copy data from the JSON file mapping
-const aboutEntry = await getEntry('about', 'about');
+const aboutEntry = await getEntry('about', 'index');
 if (!aboutEntry) {
   throw new Error("Could not find content for 'src/content/about/about.json'");
 }

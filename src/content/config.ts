@@ -1,5 +1,4 @@
 import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders'
 
 const livingNotebookCollection = defineCollection({
   type: 'content',
@@ -57,7 +56,7 @@ const home = defineCollection({
 });
 
 const about = defineCollection({
-  loader: glob({ pattern: 'about.json', base: './src/content/about' }),
+  type: 'data',
   schema: z.object({
     title: z.string(),
     meta: z.object({
