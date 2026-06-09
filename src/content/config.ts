@@ -26,8 +26,6 @@ const gear = defineCollection({
     })
   ),
 });
-
-// 3. The new modular Home Page data collection
 const home = defineCollection({
   type: 'data',
   schema: z.object({
@@ -41,8 +39,12 @@ const home = defineCollection({
       heading: z.string(),
       pillars: z.array(
         z.object({
+          number: z.string(),
           title: z.string(),
-          description: z.string(),
+          descPart1: z.string(),
+          hasEmphasis: z.boolean(),
+          emphasisText: z.string(),
+          descPart2: z.string(),
         })
       ),
     }),
@@ -52,6 +54,3 @@ const home = defineCollection({
     }),
   }),
 });
-
-// 4. Export all collections together matching your original syntax style
-export const collections = { livingNotebookCollection, gear, home };

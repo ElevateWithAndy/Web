@@ -41,7 +41,11 @@ const recentPosts = rawPosts
             <h3 class="font-normal text-lg text-[#1e1b21] uppercase tracking-wide">
               {pillar.title}
             </h3>
-            <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed" set:html={pillar.description} />
+            <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
+              {pillar.descPart1}
+              {pillar.hasEmphasis && <em>{pillar.emphasisText}</em>}
+              {pillar.descPart2}
+            </p>
           </div>
         ))}
       </div>

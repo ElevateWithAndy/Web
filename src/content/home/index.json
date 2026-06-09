@@ -11,17 +11,26 @@
       {
         "number": "01",
         "title": "Functional Movement",
-        "description": "The embodied practice of skillfully navigating space with efficiency and ease. excellence in biomechanics transforms your relationship with gravity. daily struggles become feedback, allowing to become turning it into your greatest training tool. When you move functionally, daily life becomes your gym. Intentional movement has the ability to repattern subconscious movement, giving your body more skillful choices in navigating through space, reclaiming how the human body was designed to move."
+        "descPart1": "The embodied practice of skillfully navigating space with efficiency and ease. excellence in biomechanics transforms your relationship with gravity. daily struggles become feedback, allowing to become turning it into your greatest training tool. When you move functionally, daily life becomes your gym. Intentional movement has the ability to repattern subconscious movement, giving your body more skillful choices in navigating through space, reclaiming how the human body was designed to move.",
+        "hasEmphasis": false,
+        "emphasisText": "",
+        "descPart2": ""
       },
       {
         "number": "02",
         "title": "Restorative Rituals",
-        "description": "A practice of judgment-free curiosity and permission to be exactly where your feet are. True change requires the courage to step into the dark spaces, shine a light on the disconnect, and investigate the sticky spots. By trading self-criticism for curiosity—meeting a challenge with a simple, <em>'Interesting. That’s a little quirky. What do I need to do to make that happen?'</em>—we step out of our own way and make room for deep, lasting restoration."
+        "descPart1": "A practice of judgment-free curiosity and permission to be exactly where your feet are. True change requires the courage to step into the dark spaces, shine a light on the disconnect, and investigate the sticky spots. By trading self-criticism for curiosity—meeting a challenge with a simple, ",
+        "hasEmphasis": true,
+        "emphasisText": "'Interesting. That’s a little quirky. What do I need to do to make that happen?'",
+        "descPart2": "—we step out of our own way and make room for deep, lasting restoration."
       },
       {
         "number": "03",
         "title": "Integrated Connection",
-        "description": "True strength requires shifting from gripping sub-conscious tension to appropriate tone. By deeply connecting your limbs to your core, nothing works in isolation. This practice leverages neuroplasticity to rewrite the habits of overworking, allowing your body to step into a cohesive, effortless strength. Move as you were meant to move and find your ease"
+        "descPart1": "True strength requires shifting from gripping sub-conscious tension to appropriate tone. By deeply connecting your limbs to your core, nothing works in isolation. This practice leverages neuroplasticity to rewrite the habits of overworking, allowing your body to step into a cohesive, effortless strength. Move as you were meant to move and find your ease",
+        "hasEmphasis": false,
+        "emphasisText": "",
+        "descPart2": ""
       }
     ]
   },
