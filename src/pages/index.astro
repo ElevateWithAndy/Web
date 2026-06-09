@@ -1,103 +1,52 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+// Fetch home page text content from the JSON entry
+const homeEntry = await getEntry('home', 'index');
+if (!homeEntry) {
+  throw new Error("Could not find content for 'src/content/home/index.json'");
+}
+
+const { title, hero, foundations } = homeEntry.data;
+
 // Fetch the 2 most recent LivingNotebook posts to feature at the bottom
-const rawPosts = await getCollection('LivingNotebook') || [];
+// Uses 'livingNotebookCollection' to match your exact export key in config.ts
+const rawPosts = await getCollection('livingNotebookCollection') || [];
 const recentPosts = rawPosts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 2);
 ---
 
-<BaseLayout title="Elevate With Andy | Resilience in Motion">
+<BaseLayout title={title}>
   <!-- Section 1: Minimalist Hero Banner -->
   <section class="max-w-4xl mx-auto px-6 pt-10 pb-8 text-center">
     <h1 class="text-4xl md:text-5xl font-light tracking-wide text-[#1e1b21] uppercase leading-tight">
-      Reclaim how your<br class="hidden md:inline"/> body was designed to move.
+      {hero.headingLine1}<br class="hidden md:inline"/> {hero.headingLine2}
     </h1>
     <p class="text-base text-[#7a7480] mt-6 max-w-xl mx-auto font-light leading-relaxed">
-      Welcome to a lifestyle space built on three transformative pillars: Functional Movement, Restorative Rituals, and Integrated Connection. Through my own healing journey, video training, and curated tools, you will learn to step away from gripping tension—whether you are diving into a world of D&D, managing the yard, tending to chickens, or wrangling dogs. Master your biomechanics, rewrite your neural habits, and turn daily living into your gym. Move as you were meant to move and find your ease.
+      {hero.body}
     </p>
   </section>
 
   <!-- Section 2: Three Pillars Showcase -->
   <section class="bg-[#fcfbfc] border-y border-neutral-100 pt-12 pb-16">
     <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase text-center mb-12">The Foundations</h2>
+      <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase text-center mb-12">
+        {foundations.heading}
+      </h2>
       
       <div class="grid md:grid-cols-3 gap-12">
-        <!-- Pillar 1 -->
-        <div class="text-center group">
-          <div class="w-12 h-12 rounded-full bg-[#7a7480]/10 flex items-center justify-center mx-auto mb-4 text-[#7a7480] font-light text-xl">01</div>
-          <h3 class="font-normal text-lg text-[#1e1b21] uppercase tracking-wide">Functional Movement</h3>
-          <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
-            The embodied practice of skillfully navigating space with efficiency and ease. excellence in biomechanics transforms your relationship with gravity.  daily struggles become feedback,   allowing to become turning it into your greatest training tool. When you move functionally, daily life becomes your gym. Intentional movement has the ability to repattern subconscious movement, giving your body more skillful choices in navigating through space, reclaiming how the human body was designed to move.
-          </p>
-        </div>
-
-        <!-- Pillar 2 -->
-        <div class="text-center group">
-          <div class="w-12 h-12 rounded-full bg-[#7a7480]/10 flex items-center justify-center mx-auto mb-4 text-[#7a7480] font-light text-xl">02</div>
-          <h3 class="font-normal text-lg text-[#1e1b21] uppercase tracking-wide">Restorative Rituals</h3>
-          <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
-            A practice of judgment-free curiosity and permission to be exactly where your feet are. True change requires the courage to step into the dark spaces, shine a light on the disconnect, and investigate the sticky spots. By trading self-criticism for curiosity—meeting a challenge with a simple, <em>'Interesting. That’s a little quirky. What do I need to do to make that happen?'</em>—we step out of our own way and make room for deep, lasting restoration.
-         </p>
-        </div>
-
-        <!-- Pillar 3 -->
-        <div class="text-center group">
-          <div class="w-12 h-12 rounded-full bg-[#7a7480]/10 flex items-center justify-center mx-auto mb-4 text-[#7a7480] font-light text-xl">03</div>
-          <h3 class="font-normal text-lg text-[#1e1b21] uppercase tracking-wide">Integrated Connection</h3>
-          <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
-            True strength requires shifting from gripping sub-conscious tension to appropriate tone. By deeply connecting your limbs to your core, nothing works in isolation. This practice leverages neuroplasticity to rewrite the habits of overworking, allowing your body to step into a cohesive, effortless strength. Move as you were meant to move and find your ease
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 3: Latest Snippets from the Living Notebook -->
-  <section class="max-w-4xl mx-auto px-6 py-20">
-    <div class="flex justify-between items-end border-b border-neutral-100 pb-4 mb-10">
-      <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase">Latest from the Living Notebook</h2>
-      <a href="/LivingNotebook" class="text-xs font-semibold uppercase tracking-wider text-[#1e1b21] hover:underline">View All Entries →</a>
-    </div>
-
-    {recentPosts.length === 0 ? (
-      <p class="text-sm text-[#7a7480] font-light italic">New reflections coming soon.</p>
-    ) : (
-      <div class="grid md:grid-cols-2 gap-12">
-        {recentPosts.map(post => (
-          <article class="group">
-            <time class="text-xs text-[#7a7480] font-light block mb-2">
-              {post.data.pubDate.toLocaleDateString('en-us', { month: 'long', day: 'numeric', year: 'numeric' })}
-            </time>
-            <h3 class="text-lg font-normal text-[#1e1b21] group-hover:text-[#7a7480] transition-colors uppercase tracking-wide">
-              <a href={`/LivingNotebook/${post.slug}/`}>{post.data.title}</a>
+        {foundations.pillars.map((pillar) => (
+          <div class="text-center">
+            <h3 class="text-lg font-medium text-[#1e1b21] mb-3">
+              {pillar.title}
             </h3>
-            <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
-              {post.data.description}
+            <p class="text-sm text-[#7a7480] font-light leading-relaxed max-w-xs mx-auto">
+              {pillar.description}
             </p>
-          </article>
+          </div>
         ))}
-      </div>
-    )}
-  </section>
-
-  <!-- Section 4: Video Hub Redirect Callout -->
-  <section class="bg-[#1e1b21] text-white py-16 text-center">
-    <div class="max-w-xl mx-auto px-6">
-      <h3 class="text-2xl font-light uppercase tracking-wide">Looking for more?</h3>
-      <p class="text-sm text-neutral-300 font-light mt-3 leading-relaxed">
-        My ever-expanding library of restorative rituals, functional movement, and connecting to the world is hosted directly on YouTube.
-      </p>
-      <div class="mt-8">
-        <a 
-          href="/videos" 
-          class="inline-block bg-white hover:bg-neutral-100 text-[#1e1b21] text-xs font-semibold tracking-wider uppercase px-6 py-3 rounded transition-colors"
-        >
-          Browse Playlists 
-        </a>
       </div>
     </div>
   </section>

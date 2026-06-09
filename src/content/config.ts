@@ -5,7 +5,6 @@ const livingNotebookCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    // Converts date strings safely into JavaScript Date objects
     pubDate: z.coerce.date(), 
     tags: z.array(z.string()).optional(),
     layoutType: z.enum(['elevate', 'dnd']).optional().default('elevate'),
@@ -28,4 +27,27 @@ const gear = defineCollection({
   ),
 });
 
-export const collections = { livingNotebookCollection, gear };
+// 3. The new modular Home Page data collection
+const home = defineCollection({
+  type: 'data',
+  schema: z.object({
+    title: z.string(),
+    hero: z.object({
+      headingLine1: z.string(),
+      headingLine2: z.string(),
+      body: z.string(),
+    }),
+    foundations: z.object({
+      heading: z.string(),
+      pillars: z.array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+        })
+      ),
+    }),
+  }),
+});
+
+// 4. Export all collections together matching your original syntax style
+export const collections = { livingNotebookCollection, gear, home };

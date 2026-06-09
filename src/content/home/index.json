@@ -1,0 +1,25 @@
+{
+  "title": "Elevate With Andy | Resilience in Motion",
+  "hero": {
+    "headingLine1": "Reclaim how your",
+    "headingLine2": "body was designed to move.",
+    "body": "Welcome to a lifestyle space built on three transformative pillars: Functional Movement, Restorative Rituals, and Integrated Connection. Through my own healing journey, video training, and curated tools, you will learn to step away from gripping tension—whether you are diving into a world of D&D, managing the yard, tending to chickens, or wrangling dogs. Master your biomechanics, rewrite your neural habits, and turn daily living into your gym. Move as you were meant to move and find your ease."
+  },
+  "foundations": {
+    "heading": "The Foundations",
+    "pillars": [
+      {
+        "title": "Functional Movement",
+        "description": "Unlock natural, pain-free mobility by retraining your foundational biomechanics. Learn to move with strength and efficiency in your daily routines."
+      },
+      {
+        "title": "Restorative Rituals",
+        "description": "Release accumulated, gripping physical tension. Cultivate daily habits that soothe your nervous system and restore structural ease."
+      },
+      {
+        "title": "Integrated Connection",
+        "description": "Bridge the gap between mind and motion. Connect your physical training to the activities you love, from active chores to immersive hobbies."
+      }
+    ]
+  }
+}
