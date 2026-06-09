@@ -54,3 +54,9 @@ const home = defineCollection({
     }),
   }),
 });
+
+export const collections = { 
+  'LivingNotebook': livingNotebookCollection, 
+  gear, 
+  home 
+};
