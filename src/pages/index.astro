@@ -10,7 +10,7 @@ if (!homeEntry) {
 const { title, hero, foundations, videoHub } = homeEntry.data;
 
 // Fetch the 2 most recent LivingNotebook posts to feature at the bottom
-const rawPosts = await getCollection('livingNotebookCollection') || [];
+const rawPosts = await getCollection('LivingNotebook') || [];
 const recentPosts = rawPosts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 2);
