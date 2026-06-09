@@ -55,8 +55,37 @@ const home = defineCollection({
   }),
 });
 
+const about = defineCollection({
+  type: 'data',
+  schema: z.object({
+    title: z.string(),
+    meta: z.object({
+      subtitle: z.string(),
+      heading: z.string(),
+    }),
+    storyParagraphs: z.array(z.string()),
+    modalities: z.object({
+      heading: z.string(),
+      items: z.array(
+        z.object({
+          title: z.string(),
+          descPart1: z.string(),
+          hasEmphasis: z.boolean(),
+          emphasisText: z.string(),
+          descPart2: z.string(),
+        })
+      ),
+    }),
+    cta: z.object({
+      text: z.string(),
+      url: z.string().url(),
+    }),
+  }),
+});
+
 export const collections = { 
   'LivingNotebook': livingNotebookCollection, 
   gear, 
-  home 
+  home,
+  about
 };

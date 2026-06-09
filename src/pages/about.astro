@@ -1,73 +1,68 @@
 ---
+import { getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Fetch the copy data from the JSON file mapping
+const aboutEntry = await getEntry('about', 'about');
+if (!aboutEntry) {
+  throw new Error("Could not find content for 'src/content/about/about.json'");
+}
+const { title, meta, storyParagraphs, modalities, cta } = aboutEntry.data;
 ---
 
-<BaseLayout title="Our Philosophy | Elevate With Andy">
+<BaseLayout title={title}>
   <main class="max-w-3xl mx-auto px-6 py-16">
     
     <!-- Hero Header Narrative -->
     <header class="text-center max-w-xl mx-auto mb-6">
-      <span class="text-xs font-semibold tracking-[0.25em] text-[#7a7480] uppercase block mb-3">About the Practice</span>
-      <h1 class="text-3xl font-light tracking-wide text-[#1e1b21] uppercase">Resilience in Motion</h1>
+      <span class="text-xs font-semibold tracking-[0.25em] text-[#7a7480] uppercase block mb-3">
+        {meta.subtitle}
+      </span>
+      <h1 class="text-3xl font-light tracking-wide text-[#1e1b21] uppercase">
+        {meta.heading}
+      </h1>
       <div class="w-12 h-px bg-[#7a7480]/30 mx-auto mt-6"></div>
     </header>
 
     <!-- Editorial Core Story Content -->
     <article class="space-y-8 text-base text-[#1e1b21] font-light leading-relaxed">
-      <p>
-        Professional ballet dancer, Pilates & CoreAlign instructor, cancer survivor, FND warrior—welcome to my living notebook on rebuilding resilience. 
-      </p>
-      
-      <p>
-        Following cancer treatment, a six-month decline led to a diagnosis—Functional Neurological Disorder (FND). My right limbs stopped firing properly, causing tremors and a gait impairment that during flares stole my ability to walk independently or write. Shifting from thinking to somatic feeling, I rely on functional movement & neurofeedback to actively rewire my body. Two years after FND diagnosis, I created Resilience in Motion—a modern dance solo built as the kinesthetic embodiment of reclaimed aliveness.  
-      </p>
-
-      <p>
-        Through judgment-free curiosity, restorative rituals, bone rhythms & neuromuscular integration, we create deep physical changes that leave the studio space with you—giving your body more skillful options to build a resilient self. 
-      </p>
-
-      <p>
-        Move from survivor to thriver.
-      </p>
+      {storyParagraphs.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
     </article>
 
     <!-- The Three Pillars Detail Shelves -->
     <section class="pt-10 pb-4 space-y-12">
-      <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase border-b border-neutral-100 pb-2">The Modalities</h2>
+      <h2 class="text-xs font-bold tracking-widest text-[#7a7480] uppercase border-b border-neutral-100 pb-2">
+        {modalities.heading}
+      </h2>
       
       <div class="space-y-8">
-        <div>
-          <h3 class="text-sm font-semibold text-[#1e1b21] uppercase tracking-wide">01 / Functional Movement</h3>
-          <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
-            The embodied practice of skillfully navigating space with efficiency and ease. excellence in biomechanics transforms your relationship with gravity.  daily struggles become feedback,   allowing to become turning it into your greatest training tool. When you move functionally, daily life becomes your gym. Intentional movement has the ability to repattern subconscious movement, giving your body more skillful choices in navigating through space, reclaiming how the human body was designed to move.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="text-sm font-semibold text-[#1e1b21] uppercase tracking-wide">02 / Restorative Rituals</h3>
-          <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
-            A practice of judgment-free curiosity and permission to be exactly where your feet are. True change requires the courage to step into the dark spaces, shine a light on the disconnect, and investigate the sticky spots. By trading self-criticism for curiosity—meeting a challenge with a simple, <em>'Interesting. That’s a little quirky. What do I need to do to make that happen?'</em>—we step out of our own way and make room for deep, lasting restoration.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="text-sm font-semibold text-[#1e1b21] uppercase tracking-wide">03 / Integrated Connection</h3>
-          <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
-            True strength requires shifting from gripping sub-conscious tension to appropriate tone. By deeply connecting your limbs to your core, nothing works in isolation. This practice leverages neuroplasticity to rewrite the habits of overworking, allowing your body to step into a cohesive, effortless strength. Move as you were meant to move and find your ease
-          </p>
-        </div>
+        {modalities.items.map((modality) => (
+          <div>
+            <h3 class="text-sm font-semibold text-[#1e1b21] uppercase tracking-wide">
+              {modality.title}
+            </h3>
+            <p class="text-sm text-[#7a7480] font-light mt-2 leading-relaxed">
+              {modality.descPart1}
+              {modality.hasEmphasis && <em>{modality.emphasisText}</em>}
+              {modality.descPart2}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
 
     <!-- Connect / Call to Action Block -->
     <section class="pt-8 pb-4 pt-12 border-t border-neutral-100 text-center">
-        <a href="https://www.youtube.com/@elevatewithandy?sub_confirmation=1" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            class="text-xs font-semibold tracking-wider uppercase bg-[#1e1b21] 
-                hover:bg-[#7a7480] text-white px-6 py-3 rounded transition-colors shadow-sm">
-            Join the Practice
-        </a>
+      <a 
+        href={cta.url} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="text-xs font-semibold tracking-wider uppercase bg-[#1e1b21] hover:bg-[#7a7480] text-white px-6 py-3 rounded transition-colors shadow-sm inline-block"
+      >
+        {cta.text}
+      </a>
     </section>
 
   </main>
