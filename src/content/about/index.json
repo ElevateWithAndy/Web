@@ -1,0 +1,43 @@
+{
+  "title": "Our Philosophy | Elevate With Andy",
+  "meta": {
+    "subtitle": "About the Practice",
+    "heading": "Resilience in Motion"
+  },
+  "storyParagraphs": [
+    "Professional ballet dancer, Pilates & CoreAlign instructor, cancer survivor, FND warrior—welcome to my living notebook on rebuilding resilience.",
+    "Following cancer treatment, a six-month decline led to a diagnosis—Functional Neurological Disorder (FND). My right limbs stopped firing properly, causing tremors and a gait impairment that during flares stole my ability to walk independently or write. Shifting from thinking to somatic feeling, I rely on functional movement & neurofeedback to actively rewire my body. Two years after FND diagnosis, I created Resilience in Motion—a modern dance solo built as the kinesthetic embodiment of reclaimed aliveness.",
+    "Through judgment-free curiosity, restorative rituals, bone rhythms & neuromuscular integration, we create deep physical changes that leave the studio space with you—giving your body more skillful options to build a resilient self.",
+    "Move from survivor to thriver."
+  ],
+  "modalities": {
+    "heading": "The Modalities",
+    "items": [
+      {
+        "title": "01 / Functional Movement",
+        "descPart1": "The embodied practice of skillfully navigating space with efficiency and ease. excellence in biomechanics transforms your relationship with gravity. daily struggles become feedback, allowing to become turning it into your greatest training tool. When you move functionally, daily life becomes your gym. Intentional movement has the ability to repattern subconscious movement, giving your body more skillful choices in navigating through space, reclaiming how the human body was designed to move.",
+        "hasEmphasis": false,
+        "emphasisText": "",
+        "descPart2": ""
+      },
+      {
+        "title": "02 / Restorative Rituals",
+        "descPart1": "A practice of judgment-free curiosity and permission to be exactly where your feet are. True change requires the courage to step into the dark spaces, shine a light on the disconnect, and investigate the sticky spots. By trading self-criticism for curiosity—meeting a challenge with a simple, ",
+        "hasEmphasis": true,
+        "emphasisText": "'Interesting. That’s a little quirky. What do I need to do to make that happen?'",
+        "descPart2": "—we step out of our own way and make room for deep, lasting restoration."
+      },
+      {
+        "title": "03 / Integrated Connection",
+        "descPart1": "True strength requires shifting from gripping sub-conscious tension to appropriate tone. By deeply connecting your limbs to your core, nothing works in isolation. This practice leverages neuroplasticity to rewrite the habits of overworking, allowing your body to step into a cohesive, effortless strength. Move as you were meant to move and find your ease",
+        "hasEmphasis": false,
+        "emphasisText": "",
+        "descPart2": ""
+      }
+    ]
+  },
+  "cta": {
+    "text": "Join the Practice",
+    "url": "https://youtube.com"
+  }
+}
