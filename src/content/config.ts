@@ -46,6 +46,10 @@ const home = defineCollection({
         })
       ),
     }),
+    videoHub: z.object({
+      heading: z.string(),
+      body: z.string(),
+    }),
   }),
 });
 
